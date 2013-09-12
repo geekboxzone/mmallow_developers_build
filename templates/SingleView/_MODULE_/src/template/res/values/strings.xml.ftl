@@ -15,5 +15,5 @@
         limitations under the License.
 -->
 <resources>
-    <string name="sample_action">${sample.strings.sample_action}</string>
+    <string name="sample_action">${sample.strings.sample_action!"Try it out!"}</string>
 </resources>

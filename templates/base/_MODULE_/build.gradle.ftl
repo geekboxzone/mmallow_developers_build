@@ -48,7 +48,7 @@ List<String> dirs = [
 android {
      <#-- Note that target SDK is hardcoded in this template. We expect all samples
           to always use the most current SDK as their target. -->
-    compileSdkVersion 18
+    compileSdkVersion ${sample.compileSdkVersion!18}
     buildToolsVersion "18.0.1"
 
 
@@ -62,6 +62,10 @@ android {
             }
         }
     }
+
+    instrumentTest.setRoot('tests')
+    instrumentTest.java.srcDirs = ['tests/src']
+
 }
 
 task preflight (dependsOn: parent.preflight) {
