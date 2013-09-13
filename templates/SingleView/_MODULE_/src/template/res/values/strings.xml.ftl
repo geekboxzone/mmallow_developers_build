@@ -15,5 +15,9 @@
         limitations under the License.
 -->
 <resources>
-    <string name="sample_action">${sample.strings.sample_action!"Try it out!"}</string>
+    <#if (sample.strings.sample_action)?is_string>
+        <string name="sample_action">${sample.strings.sample_action}</string>
+    <#else>
+        <string name="sample_action">TODO: Add strings/!sample_action!</string>
+    </#if>
 </resources>
