@@ -13,3 +13,4 @@
 # limitations under the License.
 src/template/
 src/common/
+build.gradle
