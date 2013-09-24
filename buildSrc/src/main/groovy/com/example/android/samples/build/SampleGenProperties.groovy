@@ -40,7 +40,7 @@ class SampleGenProperties {
     /**
      *  Directory where the top-level sample project lives
      */
-    def targetProjectDir
+    def targetProjectPath
 
     /**
      * Relative path to samples/common directory
@@ -53,18 +53,42 @@ class SampleGenProperties {
     /**
      * Java package name for the root package of this sample.
      */
-     String targetSamplePackage
+    String targetSamplePackage
+
+    /**
+     *
+     * @return The path to the sample project (as opposed to the top-level project, which
+     *         what is that even for anyway?)
+     */
+    String targetSamplePath() {
+        return "${targetProjectPath}/${targetSampleModule()}"
+    }
 
 
-    String targetCommonSourceDir() {
-        return "${targetProjectDir}/${targetSampleModule()}/src/common/java/com/example/android/common"
+
+    /**
+     *
+     * @return The path that contains common files -- can be cleaned without harming
+     *         the sample
+     */
+    String targetCommonPath() {
+        return "${targetSamplePath()}/src/common/java/com/example/android/common"
+    }
+
+    /**
+     *
+     * @return The path that contains template files -- can be cleaned without harming
+     *         the sample
+     */
+    String targetTemplatePath() {
+        return "${targetSamplePath()}/src/template"
     }
 
     /**
      * The name of this sample (and also of the corresponding .iml file)
      */
     String targetSampleName() {
-        return project.file(targetProjectDir).getName()
+        return project.file(targetProjectPath).getName()
     }
 
     /**
@@ -78,7 +102,7 @@ class SampleGenProperties {
      * The path to the template parameters file
      */
     String templateXml() {
-        return "${targetProjectDir}/template-params.xml"
+        return "${targetProjectPath}/template-params.xml"
     }
 
     /**
@@ -93,7 +117,7 @@ class SampleGenProperties {
      * Returns the path to the common/build/templates directory
      */
     String templatesRoot() {
-        return "${targetProjectDir}/${pathToBuild}/templates"
+        return "${targetProjectPath}/${pathToBuild}/templates"
     }
 
 
@@ -101,7 +125,7 @@ class SampleGenProperties {
      * Returns the path to common/src/java
      */
     String commonSourceRoot() {
-        return "${targetProjectDir}/${pathToSamplesCommon}/src/java/com/example/android/common"
+        return "${targetProjectPath}/${pathToSamplesCommon}/src/java/com/example/android/common"
     }
 
     /**
@@ -205,7 +229,7 @@ class SampleGenProperties {
 
         // Extra data that some templates find useful
         result.put("meta", [
-                root: targetProjectDir,
+                root: targetProjectPath,
                 module: targetSampleModule(),
                 common: pathToSamplesCommon,
                 build: pathToBuild,
@@ -221,8 +245,8 @@ class SampleGenProperties {
      * explicitly specified.
      */
     void getRefreshProperties() {
-        if (!this.targetProjectDir) {
-            this.targetProjectDir = project.projectDir
+        if (!this.targetProjectPath) {
+            this.targetProjectPath = project.projectDir
         }
         def xmlFile = project.file(templateXml())
         if (xmlFile.exists()) {
@@ -248,7 +272,8 @@ class SampleGenProperties {
             if (project.hasProperty('pathToSamplesCommon')) {
                 this.pathToSamplesCommon = project.pathToSamplesCommon
             } else {
-                throw new GradleException ('create task requires project property pathToSamplesCommon')
+                throw new GradleException (
+                        'create task requires project property pathToSamplesCommon')
             }
         }
 
@@ -260,20 +285,23 @@ class SampleGenProperties {
             }
         }
 
-        if (!this.targetProjectDir) {
+        if (!this.targetProjectPath) {
             if (project.hasProperty('out')) {
-                this.targetProjectDir = project.out
+                this.targetProjectPath = project.out
             } else {
-                this.targetProjectDir  = System.console().readLine("\noutput directory [$calledFrom]:")
-                if (this.targetProjectDir.length() <= 0) {
-                    this.targetProjectDir = calledFrom
+                this.targetProjectPath = System.console().readLine(
+                        "\noutput directory [$calledFrom]:")
+                if (this.targetProjectPath.length() <= 0) {
+                    this.targetProjectPath = calledFrom
                 }
             }
         }
 
         if (!this.targetSamplePackage) {
-            def defaultPackage = "com.example.android." + this.targetSampleName().toLowerCase()
-            this.targetSamplePackage = System.console().readLine("\nsample package name[$defaultPackage]:")
+            def defaultPackage = "com.example.android." +
+                    this.targetSampleName().toLowerCase()
+            this.targetSamplePackage = System.console().readLine(
+                    "\nsample package name[$defaultPackage]:")
             if (this.targetSamplePackage.length() <= 0) {
                 this.targetSamplePackage = defaultPackage
             }

@@ -46,6 +46,7 @@ class SampleGenPlugin implements Plugin {
         })
     }
 
+
     @Override
     void apply(project) {
         project.extensions.create("samplegen", SampleGenProperties)
@@ -67,17 +68,17 @@ class SampleGenPlugin implements Plugin {
                     'processTemplates',
                     samplegen,
                     samplegen.templates(),
-                    samplegen.targetProjectDir)
+                    samplegen.targetProjectPath)
             createTask(project,
                     'processCommon',
                     samplegen,
                     samplegen.common(),
-                    samplegen.targetCommonSourceDir())
+                    samplegen.targetCommonPath())
 
 
             project.task([type: GradleBuild], 'bootstrap', {
-                buildFile = "${samplegen.targetProjectDir}/build.gradle"
-                dir = samplegen.targetProjectDir
+                buildFile = "${samplegen.targetProjectPath}/build.gradle"
+                dir = samplegen.targetProjectPath
                 tasks = ["refresh"]
             })
             project.bootstrap.dependsOn(project.processTemplates)
