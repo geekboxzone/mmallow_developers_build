@@ -106,11 +106,21 @@ class SampleGenProperties {
     }
 
     /**
-     * Returns the sample's fully qualified Java package as an OS dependent
-     * path fragment
+     * Transforms a package name into a java-style OS dependent path
+     * @param pkg cccc
+     * @return The java-style path to the package's code
      */
-    String targetSamplePackageAsPath() {
-        return targetSamplePackage.replaceAll(/\./, File.separator)
+    String packageAsPath(String pkg) {
+        return pkg.replaceAll(/\./, File.separator)
+    }
+
+    /**
+     * Transforms a path into a java-style package name
+     * @param path The java-style path to the package's code
+     * @return Name of the package to transform
+     */
+    String pathAsPackage(String path) {
+        return path.replaceAll(File.separator, /\./)
     }
 
     /**
@@ -147,7 +157,7 @@ class SampleGenProperties {
         String outputPath = relativeInputPath
         outputPath = outputPath.replaceAll('_PROJECT_', targetSampleName())
         outputPath = outputPath.replaceAll('_MODULE_', targetSampleModule())
-        outputPath = outputPath.replaceAll('_PACKAGE_', targetSamplePackageAsPath())
+        outputPath = outputPath.replaceAll('_PACKAGE_', packageAsPath(targetSampleModule()))
 
         // This is kind of a hack; IntelliJ picks up any and all subdirectories named .idea, so
         // named them ._IDE_ instead. TODO: remove when generating .idea projects is no longer necessary.

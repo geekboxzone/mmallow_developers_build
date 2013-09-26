@@ -28,3 +28,27 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.6'
 }
 
+task emitAnt(type:Copy) {
+    def outputPath = "build/ant"
+    def inputPath = "${project.projectDir}/${samplegen.targetSampleModule()}"
+    mkdir outputPath
+    into outputPath
+    includeEmptyDirs
+    ["main", "common", "template"].each { input ->
+        [[ "java", "src"], ["res", "res"]].each { filetype ->
+            def srcPath = "${inputPath}/src/${input}/${filetype[0]}"
+            into("${filetype[1]}") {
+                from(srcPath)
+            }
+        }
+    }
+    from("${inputPath}/src/main") { include "AndroidManifest.xml" }
+    from("${inputPath}/src/template") { include "project.properties" }
+}
+
+task emitBrowsable(type:Copy) {
+    def output = "build/browsable"
+    mkdir output
+    into output
+
+}

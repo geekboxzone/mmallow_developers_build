@@ -48,13 +48,7 @@ List<String> dirs = [
 android {
      <#-- Note that target SDK is hardcoded in this template. We expect all samples
           to always use the most current SDK as their target. -->
-<#if (sample.compileSdkVersion)?is_number >
-    compileSdkVersion ${sample.compileSdkVersion}
-<#elseif (sample.compileSdkVersion)?is_string>
-    compileSdkVersion "${sample.compileSdkVersion}"
-<#else>
-    compileSdkVersion 18
-</#if>
+    compileSdkVersion ${compile_sdk}
     buildToolsVersion "18.0.1"
 
     sourceSets {

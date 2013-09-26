@@ -51,7 +51,6 @@ class SampleGenPlugin implements Plugin {
     void apply(project) {
         project.extensions.create("samplegen", SampleGenProperties)
         project.samplegen.project = project
-        project.afterEvaluate({
             SampleGenProperties samplegen = project.samplegen
             project.task('create') {
                 if (project.gradle.startParameter.taskNames.contains('create')) {
@@ -64,6 +63,7 @@ class SampleGenPlugin implements Plugin {
                 samplegen.getRefreshProperties()
             }
 
+        project.afterEvaluate({
             createTask(project,
                     'processTemplates',
                     samplegen,
@@ -91,6 +91,7 @@ class SampleGenPlugin implements Plugin {
             // People get nervous when they see a task with no actions, so...
             project.create << {println "Project creation finished."}
             project.refresh << {println "Project refresh finished."}
+
         })
     }
 

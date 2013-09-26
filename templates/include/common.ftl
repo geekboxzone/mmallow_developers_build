@@ -20,3 +20,15 @@
 <#elseif meta.outputFile?ends_with("xml")>
     <#include "xml-style-copyright.ftl">
 </#if>
+
+<#-- Set the compile SDK version. This is more complicated than it should be, because
+      the version can be either a number or a string (e.g. KeyLimePie) so we need to test
+      both to see if the variable is empty.
+-->
+<#if (sample.compileSdkVersion)?is_number >
+    <#assign compile_sdk = sample.compileSdkVersion>
+<#elseif (sample.compileSdkVersion)?is_string>
+    <#assign compile_sdk = "sample.compileSdkVersion">
+<#else>
+    <#assign compile_sdk = 18>
+</#if>
