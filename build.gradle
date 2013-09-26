@@ -47,8 +47,26 @@ task emitAnt(type:Copy) {
 }
 
 task emitBrowsable(type:Copy) {
-    def output = "build/browsable"
-    mkdir output
-    into output
+    def outputPath = "build/browsable"
+    def inputPath = "${project.projectDir}/${samplegen.targetSampleModule()}"
+    mkdir outputPath
+    into outputPath
 
+    ["main", "common", "template"].each { input ->
+        def srcPath = "${inputPath}/src/${input}"
+        into("src") {
+            from("${srcPath}/java")
+            eachFile { FileCopyDetails fcd ->
+                def file = fcd.name
+                def parent = fcd.relativePath.parent
+                def newPath = parent.pathString.replaceAll ('(?<=/)([^/]+)/(?!java)', {a,b -> "$b."})
+                newPath = "${newPath}/${file}"
+                fcd.path = newPath
+                println fcd.path
+            }
+        }
+        into("res") {
+            from("${srcPath}/res")
+        }
+    }
 }
