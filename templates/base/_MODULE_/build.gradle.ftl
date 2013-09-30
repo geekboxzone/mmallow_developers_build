@@ -35,6 +35,9 @@ dependencies {
 <#else>
     compile "com.android.support:support-v13:18.0.+"
 </#if>
+<#list sample.dependency as dep>
+    compile "${dep}"
+</#list>
 }
 
 // The sample build uses multiple directories to
