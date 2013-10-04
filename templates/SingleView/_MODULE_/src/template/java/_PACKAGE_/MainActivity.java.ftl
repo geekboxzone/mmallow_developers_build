@@ -42,10 +42,12 @@ public class MainActivity extends SampleActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        ${sample.name?cap_first}Fragment fragment = new ${sample.name?cap_first}Fragment();
-        transaction.add(fragment, FRAGTAG);
-        transaction.commit();
+        if (getSupportFragmentManager().findFragmentByTag(FRAGTAG) == null ) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            ${sample.name?cap_first}Fragment fragment = new ${sample.name?cap_first}Fragment();
+            transaction.add(fragment, FRAGTAG);
+            transaction.commit();
+        }
     }
 
     @Override
