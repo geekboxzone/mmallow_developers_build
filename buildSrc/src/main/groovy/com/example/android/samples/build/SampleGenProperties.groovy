@@ -157,7 +157,7 @@ class SampleGenProperties {
         String outputPath = relativeInputPath
         outputPath = outputPath.replaceAll('_PROJECT_', targetSampleName())
         outputPath = outputPath.replaceAll('_MODULE_', targetSampleModule())
-        outputPath = outputPath.replaceAll('_PACKAGE_', packageAsPath(targetSampleModule()))
+        outputPath = outputPath.replaceAll('_PACKAGE_', packageAsPath(targetSamplePackage))
 
         // This is kind of a hack; IntelliJ picks up any and all subdirectories named .idea, so
         // named them ._IDE_ instead. TODO: remove when generating .idea projects is no longer necessary.
