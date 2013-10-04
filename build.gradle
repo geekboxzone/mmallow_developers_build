@@ -25,11 +25,20 @@ task preflight {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.6'
+    gradleVersion = '1.8'
 }
 
+
+String outPath(String buildType) {
+    def repoInfo = "repo info platform/developers/build".execute().text
+    def buildPath = (repoInfo =~ /Mount path: (.*)/)[0][1]
+    return "${buildPath}/out/${buildType}/${samplegen.targetSampleName()}";
+}
+
+
+
 task emitAnt(type:Copy) {
-    def outputPath = "${samplegen.pathToBuild}/ant"
+    def outputPath = outPath("ant");
     def inputPath = "${project.projectDir}/${samplegen.targetSampleModule()}"
     mkdir outputPath
     into outputPath
@@ -47,10 +56,12 @@ task emitAnt(type:Copy) {
 }
 
 task emitBrowseable(type:Copy) {
-    def outputPath = "${samplegen.pathToBuild}/browsable"
+    def outputPath =outPath("browseable");
     def inputPath = "${project.projectDir}/${samplegen.targetSampleModule()}"
     mkdir outputPath
     into outputPath
+
+    from("${project.projectDir}/_index.jd")
 
     ["main", "common", "template"].each { input ->
         def srcPath = "${inputPath}/src/${input}"

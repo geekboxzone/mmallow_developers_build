@@ -1,2 +1,0 @@
-<#ftl>
-${sample.name}

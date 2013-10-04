@@ -16,7 +16,9 @@
 -->
 <sample>
     <name>${sample.name}</name>
+    <group>NoGroup</group>
     <package>${sample.package}</package>
+
 
 
     <!-- change minSdk if needed-->
