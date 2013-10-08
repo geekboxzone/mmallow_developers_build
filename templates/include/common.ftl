@@ -23,15 +23,18 @@
 
 <#-- Set the compile SDK version. This is more complicated than it should be, because
       the version can be either a number or a string (e.g. KeyLimePie) so we need to test
-      both to see if the variable is empty.
+      both to see if the variable is empty.  Note that to freemarker, all values from
+      template-params.xml are Strings, even those that are human-readable as ints.
+
+      Also, there's no way to check if it's a number or not without spamming output with try/catch
+      stacktraces, so we can't silently wrap a string in quotes and leave a number alone.
 -->
-<#if (sample.compileSdkVersion)??>
-    <#if (sample.compileSdkVersion)?is_number >
-        <#assign compile_sdk = sample.compileSdkVersion/>
-    <#elseif (sample.compileSdkVersion)?is_string>
-        <#assign compile_sdk = "sample.compileSdkVersion"/>
+<#if (sample.compileSdkVersion)?is_string>
+    <#if (sample.compileSdkVersion?contains("android")) && !(sample.compileSdkVersion?starts_with("\""))
+            && !(sample.compileSdkVersion?ends_with("\""))>
+        <#assign compile_sdk = "\"${sample.compileSdkVersion}\""/>
     <#else>
-        <#assign compile_sdk = 18/>
+        <#assign compile_sdk = sample.compileSdkVersion/>
     </#if>
 <#else>
     <#assign compile_sdk = 18/>
