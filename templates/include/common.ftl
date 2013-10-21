@@ -29,7 +29,7 @@
       Also, there's no way to check if it's a number or not without spamming output with try/catch
       stacktraces, so we can't silently wrap a string in quotes and leave a number alone.
 -->
-<#if (sample.compileSdkVersion)?is_string>
+<#if (samples.compileSdkVersion)?? && (sample.compileSdkVersion)?is_string>
     <#if (sample.compileSdkVersion?contains("android")) && !(sample.compileSdkVersion?starts_with("\""))
             && !(sample.compileSdkVersion?ends_with("\""))>
         <#assign compile_sdk = "\"${sample.compileSdkVersion}\""/>
