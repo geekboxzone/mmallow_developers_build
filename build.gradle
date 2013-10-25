@@ -28,8 +28,79 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.8'
 }
 
+
+String outPath(String buildType) {
+/*
+    def repoInfo = "repo info platform/developers/build".execute().text
+    def buildPath = (repoInfo =~ /Mount path: (.*)/)[0][1]
+*/
+    return "${samplegen.pathToBuild}/out/${buildType}/${samplegen.targetSampleName()}";
+}
+
+/**
+ * Collapse a path "IntelliJ-style" by putting dots rather than slashes between
+ * path components that have only one child. So the two paths
+ *
+ * com/example/android/foo/bar.java
+ * com/example/android/bar/foo.java
+ *
+ * Become
+ * com.example.android/foo/bar.java
+ * com.example.android/bar/foo.java
+ *
+ * @param path
+ * @param roots
+ * @return
+ */
+Map<String,String> collapsePaths(FileTree path, List<String> roots) {
+    Map result = new HashMap<String,String>();
+
+    println ("******************** Collapse *************************")
+
+    path.visit { FileVisitDetails f ->
+        if (f.isDirectory()) return;
+        StringBuilder collapsedPath = new StringBuilder("${f.name}");
+        File current = f.file;
+
+        //
+        // Starting at this file, walk back to the root of the path and
+        // substitute dots for any directory that has only one child.
+        //
+
+        // Don't substitute a dot for the separator between the end of the
+        // path and the filename, even if there's only one file in the directory.
+        if (!f.isDirectory()) {
+            current = current.parentFile;
+            collapsedPath.insert(0, "${current.name}/")
+        }
+
+        // For everything else, use a dot if there's only one child and
+        // a slash otherwise. Filter out the root paths, too--we only want
+        // the relative path. But wait, Groovy/Gradle is capricious and
+        // won't return the proper value from a call to roots.contains(String)!
+        // I'm using roots.sum here instead of tracking down why a list of
+        // strings can't return true from contains() when given a string that
+        // it quite obviously does contain.
+        current = current.parentFile;
+        while((current != null)
+                && (roots.sum {String r-> return r.equals(current.absolutePath) ? 1 : 0 } == 0)) {
+
+            char separator = current.list().length > 1 ? '/' : '.';
+            collapsedPath.insert(0, "${current.name}${separator}");
+            current = current.parentFile;
+        }
+        result.put(f.file.path, collapsedPath.toString());
+    }
+
+    println ("******************** Results *************************")
+
+    result.each {entry -> println("${entry}\n\n");}
+    return result
+}
+
+
 task emitAnt(type:Copy) {
-    def outputPath = "${samplegen.pathToBuild}/ant"
+    def outputPath = outPath("ant");
     def inputPath = "${project.projectDir}/${samplegen.targetSampleModule()}"
     mkdir outputPath
     into outputPath
@@ -47,28 +118,40 @@ task emitAnt(type:Copy) {
 }
 
 task emitBrowseable(type:Copy) {
-    def outputPath = "${samplegen.pathToBuild}/browsable"
+    def outputPath =outPath("browseable");
     def inputPath = "${project.projectDir}/${samplegen.targetSampleModule()}"
     mkdir outputPath
     into outputPath
 
     from("${project.projectDir}/_index.jd")
+    def srcDirs = ["main", "common", "template"].collect {input -> "${inputPath}/src/${input}" };
+    def javaDirs = srcDirs.collect { input -> "${input}/java"}
+    FileTree javaTree = null;
+    javaDirs.each { dir ->
+        FileTree tree = project.fileTree("${dir}")
+        javaTree = (javaTree == null) ? tree : javaTree.plus(tree)}
+    println javaTree;
+    println srcDirs
+    Map collapsedPaths = collapsePaths(javaTree, javaDirs)
 
-    ["main", "common", "template"].each { input ->
-        def srcPath = "${inputPath}/src/${input}"
+    srcDirs.each { srcPath ->
+        println srcPath;
         into("src") {
-            from("${srcPath}/java")
+            def javaPath = "${srcPath}/java";
+            from(javaPath)
+            include(["**/*.java", "**/*.xml"])
             eachFile { FileCopyDetails fcd ->
-                def file = fcd.name
-                def parent = fcd.relativePath.parent
-                def newPath = parent.pathString.replaceAll ('(?<=/)([^/]+)/(?!java)', {a,b -> "$b."})
-                newPath = "${newPath}/${file}"
-                fcd.path = newPath
-                println fcd.path
+                if (fcd.file.isFile()) {
+                    def filename = fcd.name;
+                    String collapsed = collapsedPaths.get(fcd.file.path);
+                    fcd.path = "src/${collapsed}";
+                } else {fcd.exclude()}
             }
+            println "***************** done"
         }
         into("res") {
             from("${srcPath}/res")
         }
+        into(".") {from("${srcPath}/AndroidManifest.xml")}
     }
 }
