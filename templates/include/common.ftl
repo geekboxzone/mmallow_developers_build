@@ -36,6 +36,8 @@
     <#else>
         <#assign compile_sdk = sample.compileSdkVersion/>
     </#if>
+<#elseif (sample.compileSdkVersion)?has_content>
+    <#assign compile_sdk = sample.compileSdkVersion/>
 <#else>
     <#assign compile_sdk = 18/>
 </#if>
