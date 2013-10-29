@@ -16,9 +16,12 @@
 -->
 
 // BEGIN_EXCLUDE
-apply from: "${meta.build}/build.gradle"
+import com.example.android.samples.build.SampleGenPlugin
+apply plugin: SampleGenPlugin
+
 samplegen {
   pathToBuild "${meta.build}"
   pathToSamplesCommon "${meta.common}"
 }
+apply from: "${meta.build}/build.gradle"
 // END_EXCLUDE

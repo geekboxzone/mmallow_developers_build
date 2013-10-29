@@ -14,9 +14,6 @@
 * limitations under the License.
 */
 
-// The SampleGenPlugin source is in the buildSrc directory.
-import com.example.android.samples.build.SampleGenPlugin
-apply plugin: SampleGenPlugin
 
 // Add a preflight task that depends on the "refresh" task that gets
 // added by the SampleGenPlugin.
