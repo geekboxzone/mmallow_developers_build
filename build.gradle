@@ -126,7 +126,11 @@ task emitGradle(type:Copy) {
     into outputPath
     from("${inputPath}") {
         // Paths to exclude from output
+        exclude ".gradle"
+        exclude "_index.jd"
         exclude "buildSrc"
+        exclude "template-params.xml"
+        exclude "**/proguard-project.txt"
     }
     // Remove BEGIN_EXCLUDE/END_EXCLUDE blocks from source files
     eachFile { file ->
