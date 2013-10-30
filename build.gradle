@@ -117,6 +117,37 @@ task emitAnt(type:Copy) {
     from("${inputPath}/src/template") { include "project.properties" }
 }
 
+task emitGradle(type:Copy) {
+    def outputPath = outPath("gradle");
+    def inputPath = "${project.projectDir}"
+    // Copy entire sample into output -- since it's already in Gradle format, we'll explicitly exclude content that
+    // doesn't belong here.
+    mkdir outputPath
+    into outputPath
+    from("${inputPath}") {
+        // Paths to exclude from output
+        exclude "buildSrc"
+    }
+    // Remove BEGIN_EXCLUDE/END_EXCLUDE blocks from source files
+    eachFile { file ->
+        if (file.name.endsWith(".gradle") || file.name.endsWith(".java")) {
+            // TODO(trevorjohns): Outputs a blank newline for each filtered line. Replace with java.io.FilterReader impl.
+            boolean outputLines = true;
+            def removeExcludeBlocksFilter = { line ->
+                if (line ==~ /\/\/ BEGIN_EXCLUDE/) {
+                    outputLines = false;
+                } else if (line ==~ /\/\/ END_EXCLUDE/) {
+                    outputLines = true;
+                } else if (outputLines) {
+                    return line;
+                }
+                return ""
+            }
+            filter(removeExcludeBlocksFilter)
+        }
+    }
+}
+
 task emitBrowseable(type:Copy) {
     def outputPath =outPath("browseable");
     def inputPath = "${project.projectDir}/${samplegen.targetSampleModule()}"

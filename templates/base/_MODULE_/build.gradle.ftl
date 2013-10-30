@@ -67,6 +67,8 @@ android {
         instrumentTest.java.srcDirs = ['tests/src']
     }
 }
+// BEGIN_EXCLUDE
+// Tasks below this line will be hidden from release output
 
 task preflight (dependsOn: parent.preflight) {
     project.afterEvaluate {
@@ -81,5 +83,4 @@ task preflight (dependsOn: parent.preflight) {
     }
 }
 
-
-
+// END_EXCLUDE
