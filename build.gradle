@@ -118,6 +118,7 @@ task emitAnt(type:Copy) {
 }
 
 task emitGradle(type:Copy) {
+    dependsOn(preflight)
     def outputPath = outPath("gradle");
     def inputPath = "${project.projectDir}"
     // Copy entire sample into output -- since it's already in Gradle format, we'll explicitly exclude content that
