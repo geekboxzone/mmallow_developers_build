@@ -212,3 +212,15 @@ task emitBrowseable(type:Copy) {
         into(".") {from("${srcPath}/AndroidManifest.xml")}
     }
 }
+
+task emitGradleZip(dependsOn: [emitBrowseable, emitGradle], type:Zip) {
+    def outputPath = "${samplegen.pathToBuild}/out/browseable"
+    def folderName = "${samplegen.targetSampleName()}"
+    archiveName = "${samplegen.targetSampleName()}.zip"
+    def inputPath = outPath("gradle")
+    from inputPath
+    into folderName
+    include "**"
+    def outDir = project.file(outputPath)
+    destinationDir = outDir
+}
