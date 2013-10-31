@@ -134,6 +134,7 @@ task emitGradle(type:Copy) {
         exclude "local.properties"
         exclude "template-params.xml"
         exclude "*.iml"
+        exclude "**/.idea"
         exclude "**/build"
         exclude "**/proguard-project.txt"
         exclude "${samplegen.targetSampleModule()}/**/README*.txt"
