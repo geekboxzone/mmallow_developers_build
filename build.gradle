@@ -119,7 +119,7 @@ task emitAnt(type:Copy) {
 
 task emitGradle(type:Copy) {
     dependsOn(preflight)
-    def outputPath = outPath("gradle");
+    def outputPath = outPath("gradle")
     def inputPath = "${project.projectDir}"
     // Copy entire sample into output -- since it's already in Gradle format, we'll explicitly exclude content that
     // doesn't belong here.
@@ -129,10 +129,35 @@ task emitGradle(type:Copy) {
         // Paths to exclude from output
         exclude ".gradle"
         exclude "_index.jd"
+        exclude "bin"
         exclude "buildSrc"
+        exclude "local.properties"
         exclude "template-params.xml"
+        exclude "*.iml"
+        exclude "**/.idea"
+        exclude "**/build"
         exclude "**/proguard-project.txt"
+        exclude "${samplegen.targetSampleModule()}/**/README*.txt"
+
+        // src directory needs to be consolidated, will be done in next section
+        exclude "${samplegen.targetSampleModule()}/src/"
     }
+
+    // Consolidate source directories
+    ["main", "common", "template"].each { input ->
+        ["java", "res", "assets"].each { filetype ->
+            def srcPath = "${inputPath}/${samplegen.targetSampleModule()}/src/${input}/${filetype}"
+            into("${samplegen.targetSampleModule()}/src/main/${filetype}") {
+                from(srcPath)
+            }
+        }
+    }
+
+    // Copy AndroidManifest.xml
+    into ("${samplegen.targetSampleModule()}/src/main") {
+        from("${inputPath}/${samplegen.targetSampleModule()}/src/main/AndroidManifest.xml")
+    }
+
     // Remove BEGIN_EXCLUDE/END_EXCLUDE blocks from source files
     eachFile { file ->
         if (file.name.endsWith(".gradle") || file.name.endsWith(".java")) {
@@ -190,4 +215,16 @@ task emitBrowseable(type:Copy) {
         }
         into(".") {from("${srcPath}/AndroidManifest.xml")}
     }
+}
+
+task emitGradleZip(dependsOn: [emitBrowseable, emitGradle], type:Zip) {
+    def outputPath = "${samplegen.pathToBuild}/out/browseable"
+    def folderName = "${samplegen.targetSampleName()}"
+    archiveName = "${samplegen.targetSampleName()}.zip"
+    def inputPath = outPath("gradle")
+    from inputPath
+    into folderName
+    include "**"
+    def outDir = project.file(outputPath)
+    destinationDir = outDir
 }
