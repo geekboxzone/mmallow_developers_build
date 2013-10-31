@@ -52,7 +52,7 @@ android {
      <#-- Note that target SDK is hardcoded in this template. We expect all samples
           to always use the most current SDK as their target. -->
     compileSdkVersion ${compile_sdk}
-    buildToolsVersion "18.0.1"
+    buildToolsVersion "19"
 
     sourceSets {
         main {
