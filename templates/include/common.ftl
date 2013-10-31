@@ -39,9 +39,9 @@
 <#elseif (sample.compileSdkVersion)?has_content>
     <#assign compile_sdk = sample.compileSdkVersion/>
 <#else>
-    <#assign compile_sdk = 18/>
+    <#assign compile_sdk = 19/>
 </#if>
 
 
 <#-- Set the global build tools version -->
-<#assign build_tools_version='"18.0.1"'/>
+<#assign build_tools_version='"18.1"'/>
