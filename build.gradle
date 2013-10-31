@@ -132,7 +132,9 @@ task emitGradle(type:Copy) {
         exclude "buildSrc"
         exclude "local.properties"
         exclude "template-params.xml"
+        exclude "**/build"
         exclude "**/proguard-project.txt"
+        exclude "${samplegen.targetSampleModule()}/**/README*.txt"
 
         // src directory needs to be consolidated, will be done in next section
         exclude "${samplegen.targetSampleModule()}/src/"
