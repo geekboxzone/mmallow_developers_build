@@ -129,9 +129,11 @@ task emitGradle(type:Copy) {
         // Paths to exclude from output
         exclude ".gradle"
         exclude "_index.jd"
+        exclude "bin"
         exclude "buildSrc"
         exclude "local.properties"
         exclude "template-params.xml"
+        exclude "*.iml"
         exclude "**/build"
         exclude "**/proguard-project.txt"
         exclude "${samplegen.targetSampleModule()}/**/README*.txt"
