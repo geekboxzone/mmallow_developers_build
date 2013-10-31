@@ -136,7 +136,6 @@ task emitGradle(type:Copy) {
 
         // src directory needs to be consolidated, will be done in next section
         exclude "${samplegen.targetSampleModule()}/src/"
-        include "${samplegen.targetSampleModule()}/src/main/AndroidManifest.xml"
     }
 
     // Consolidate source directories
