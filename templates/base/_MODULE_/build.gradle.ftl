@@ -38,6 +38,9 @@ dependencies {
 <#list sample.dependency as dep>
     compile "${dep}"
 </#list>
+<#list sample.dependency_external as dep>
+    compile files(${dep})
+</#list>
 }
 
 // The sample build uses multiple directories to
@@ -65,6 +68,13 @@ android {
         }
         instrumentTest.setRoot('tests')
         instrumentTest.java.srcDirs = ['tests/src']
+
+<#if sample.defaultConfig?has_content>
+        defaultConfig {
+        ${sample.defaultConfig}
+        }
+<#else>
+</#if>
     }
 }
 // BEGIN_EXCLUDE
