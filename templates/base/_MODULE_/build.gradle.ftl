@@ -26,15 +26,18 @@ buildscript {
 apply plugin: 'android'
 
 dependencies {
-    // Add the support lib that is appropriate for SDK ${sample.minSdk}
-<#if sample.minSdk?number < 7>
+<#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
+  // Add the support lib that is appropriate for SDK ${sample.minSdk}
+  <#if sample.minSdk?number < 7>
     compile "com.android.support:support-v4:18.0.+"
-<#elseif sample.minSdk?number < 13>
+  <#elseif sample.minSdk?number < 13>
     compile "com.android.support:support-v4:18.0.+"
     compile "com.android.support:gridlayout-v7:18.0.+"
-<#else>
+  <#else>
     compile "com.android.support:support-v13:18.0.+"
+  </#if>
 </#if>
+
 <#list sample.dependency as dep>
     compile "${dep}"
 </#list>
