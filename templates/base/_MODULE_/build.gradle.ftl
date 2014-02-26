@@ -25,6 +25,14 @@ buildscript {
 
 apply plugin: 'android'
 
+<#if sample.repository?has_content>
+repositories {
+<#list sample.repository as rep>
+    ${rep}
+</#list>
+}
+</#if>
+
 dependencies {
 
 <#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
