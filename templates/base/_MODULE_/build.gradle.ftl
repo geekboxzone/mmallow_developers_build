@@ -34,6 +34,7 @@ repositories {
 </#if>
 
 dependencies {
+
 <#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
     // Add the support lib that is appropriate for SDK ${sample.minSdk}
   <#if sample.minSdk?number < 7>
@@ -44,6 +45,7 @@ dependencies {
   <#else>
     compile "com.android.support:support-v13:19.0.+"
   </#if>
+
 </#if>
 
 <#list sample.dependency as dep>
@@ -66,6 +68,7 @@ android {
      <#-- Note that target SDK is hardcoded in this template. We expect all samples
           to always use the most current SDK as their target. -->
     compileSdkVersion ${compile_sdk}
+
     buildToolsVersion "19.0.1"
 
     sourceSets {
