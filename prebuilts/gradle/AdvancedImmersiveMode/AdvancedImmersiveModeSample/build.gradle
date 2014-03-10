@@ -14,8 +14,11 @@ buildscript {
 apply plugin: 'android'
 
 dependencies {
-    // Add the support lib that is appropriate for SDK 4
+
+  // Add the support lib that is appropriate for SDK 4
     compile "com.android.support:support-v4:19.0.+"
+
+
 }
 
 // The sample build uses multiple directories to
@@ -28,6 +31,7 @@ List<String> dirs = [
 
 android {
     compileSdkVersion 19
+
     buildToolsVersion "19.0.1"
 
     sourceSets {
