@@ -13,10 +13,27 @@
         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
         See the License for the specific language governing permissions and
         limitations under the License.
-        -->
+-->
+package ${sample.package}.cardstream;
 
-package ${sample.package};
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
-public interface OnCardClickListener {
-    public void onCardClick(int cardActionId, String cardTag);
+public class StreamRetentionFragment extends Fragment {
+
+    CardStreamState mState;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    public void storeCardStream(CardStreamState state) {
+        mState = state;
+    }
+
+    public CardStreamState getCardStream() {
+        return mState;
+    }
 }

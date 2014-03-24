@@ -1,6 +1,6 @@
 <fragment
     android:id="@+id/fragment_cardstream"
-    android:name="${sample.package}.CardStreamFragment"
+    android:name="${sample.package}.cardstream.CardStreamFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"

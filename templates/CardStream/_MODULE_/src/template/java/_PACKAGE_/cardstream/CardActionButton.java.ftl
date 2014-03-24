@@ -15,7 +15,7 @@
         limitations under the License.
 -->
 
-package ${sample.package};
+package ${sample.package}.cardstream;
 
 import android.content.Context;
 import android.util.AttributeSet;

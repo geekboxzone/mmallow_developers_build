@@ -15,7 +15,7 @@
         limitations under the License.
 -->
 
-package ${sample.package};
+package ${sample.package}.cardstream;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 
+import ${sample.package}.R;
 
 /**
  * A Fragment that handles a stream of cards.
