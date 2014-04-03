@@ -15,7 +15,7 @@
         limitations under the License.
 -->
 
-package ${sample.package};
+package ${sample.package}.cardstream;
 
 import android.animation.Animator;
 import android.animation.LayoutTransition;
@@ -36,6 +36,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.example.android.common.logger.Log;
+import ${sample.package}.R;
 
 import java.util.ArrayList;
 

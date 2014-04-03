@@ -24,6 +24,12 @@ import android.view.Menu;
 import com.example.android.common.activities.SampleActivityBase;
 import com.example.android.common.logger.Log;
 
+import ${sample.package}.cardstream.CardStream;
+import ${sample.package}.cardstream.CardStreamFragment;
+import ${sample.package}.cardstream.CardStreamState;
+import ${sample.package}.cardstream.OnCardClickListener;
+import ${sample.package}.cardstream.StreamRetentionFragment;
+
 public class MainActivity extends SampleActivityBase implements CardStream {
     public static final String TAG = "MainActivity";
     public static final String FRAGTAG = "${sample.name?cap_first}Fragment";

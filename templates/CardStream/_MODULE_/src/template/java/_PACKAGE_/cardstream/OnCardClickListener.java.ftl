@@ -13,11 +13,10 @@
         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
         See the License for the specific language governing permissions and
         limitations under the License.
--->
+        -->
 
-package ${sample.package};
+package ${sample.package}.cardstream;
 
-public interface CardStream {
-    public CardStreamFragment getCardStream();
+public interface OnCardClickListener {
+    public void onCardClick(int cardActionId, String cardTag);
 }
-

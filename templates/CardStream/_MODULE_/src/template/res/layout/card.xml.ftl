@@ -1,4 +1,4 @@
-<${sample.package}.CardLayout
+<${sample.package}.cardstream.CardLayout
     android:id="@+id/card_layout"
     style="@style/Card"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -52,4 +52,4 @@
         android:layout_alignWithParentIfMissing="false"
         android:visibility="invisible"/>
 
-</${sample.package}.CardLayout>
+</${sample.package}.cardstream.CardLayout>

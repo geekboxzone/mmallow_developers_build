@@ -14,26 +14,25 @@
         See the License for the specific language governing permissions and
         limitations under the License.
 -->
-package ${sample.package};
 
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
+package ${sample.package}.cardstream;
 
-public class StreamRetentionFragment extends Fragment {
+import java.util.HashSet;
 
-    CardStreamState mState;
+/**
+ * A struct object that holds the state of a {@link CardStreamFragment}.
+ */
+public class CardStreamState {
+    protected Card[] visibleCards;
+    protected Card[] hiddenCards;
+    protected HashSet<String> dismissibleCards;
+    protected String shownTag;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setRetainInstance(true);
+    protected CardStreamState(Card[] visible, Card[] hidden, HashSet<String> dismissible, String shownTag) {
+        visibleCards = visible;
+        hiddenCards = hidden;
+        dismissibleCards = dismissible;
+        this.shownTag = shownTag;
     }
 
-    public void storeCardStream(CardStreamState state) {
-        mState = state;
-    }
-
-    public CardStreamState getCardStream() {
-        return mState;
-    }
 }

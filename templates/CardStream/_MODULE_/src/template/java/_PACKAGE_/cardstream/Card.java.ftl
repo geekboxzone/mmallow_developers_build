@@ -15,7 +15,7 @@
         limitations under the License.
 -->
 
-package ${sample.package};
+package ${sample.package}.cardstream;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -28,6 +28,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import ${sample.package}.R;
 
 import java.util.ArrayList;
 
