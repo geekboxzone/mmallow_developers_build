@@ -19,7 +19,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.8.+'
+        classpath 'com.android.tools.build:gradle:0.9.+'
     }
 }
 
@@ -80,8 +80,8 @@ android {
 </#noparse>
             }
         }
-        instrumentTest.setRoot('tests')
-        instrumentTest.java.srcDirs = ['tests/src']
+        androidTest.setRoot('tests')
+        androidTest.java.srcDirs = ['tests/src']
 
 <#if sample.defaultConfig?has_content>
         defaultConfig {
