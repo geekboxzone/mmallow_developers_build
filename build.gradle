@@ -145,7 +145,7 @@ task emitGradle(type:Copy) {
 
     // Consolidate source directories
     ["main", "common", "template"].each { input ->
-        ["java", "res", "assets"].each { filetype ->
+        ["java", "res", "assets", "rs"].each { filetype ->
             def srcPath = "${inputPath}/${samplegen.targetSampleModule()}/src/${input}/${filetype}"
             into("${samplegen.targetSampleModule()}/src/main/${filetype}") {
                 from(srcPath)
@@ -212,6 +212,9 @@ task emitBrowseable(type:Copy) {
         }
         into("res") {
             from("${srcPath}/res")
+        }
+        into("src/rs") {
+            from("${srcPath}/rs")
         }
         into(".") {from("${srcPath}/AndroidManifest.xml")}
     }
