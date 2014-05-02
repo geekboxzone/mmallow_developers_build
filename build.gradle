@@ -197,6 +197,7 @@ task emitBrowseable(type:Copy) {
 
     srcDirs.each { srcPath ->
         println srcPath;
+        duplicatesStrategy = 'fail'
         into("src") {
             def javaPath = "${srcPath}/java";
             from(javaPath)
