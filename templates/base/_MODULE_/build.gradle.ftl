@@ -19,7 +19,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.11.+'
     }
 }
 
@@ -42,7 +42,7 @@ dependencies {
   <#elseif sample.minSdk?number < 13>
     compile "com.android.support:support-v4:19.1.+"
     compile "com.android.support:gridlayout-v7:19.1.+"
-  <#else>
+  <#elseif sample.minSdk?number < 20>
     compile "com.android.support:support-v13:19.1.+"
   </#if>
 
@@ -69,7 +69,7 @@ android {
           to always use the most current SDK as their target. -->
     compileSdkVersion ${compile_sdk}
 
-    buildToolsVersion "19.0.1"
+    buildToolsVersion "19.1.0"
 
     sourceSets {
         main {
