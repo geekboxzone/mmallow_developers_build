@@ -43,6 +43,7 @@ dependencies {
     compile "com.android.support:support-v4:19.1.+"
     compile "com.android.support:gridlayout-v7:19.1.+"
   <#elseif sample.minSdk?number < 20>
+    compile "com.android.support:support-v4:19.1.+"
     compile "com.android.support:support-v13:19.1.+"
   </#if>
 
