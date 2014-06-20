@@ -36,7 +36,8 @@ repositories {
 dependencies {
 
 <#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
-    // Add the support lib that is appropriate for SDK ${sample.minSdk}
+  <#if sample.minSdk?is_number >
+  // Add the support lib that is appropriate for SDK ${sample.minSdk}
   <#if sample.minSdk?number < 7>
     compile "com.android.support:support-v4:19.1.+"
   <#elseif sample.minSdk?number < 13>
@@ -45,6 +46,7 @@ dependencies {
   <#elseif sample.minSdk?number < 20>
     compile "com.android.support:support-v4:19.1.+"
     compile "com.android.support:support-v13:19.1.+"
+  </#if>
   </#if>
 
 </#if>
