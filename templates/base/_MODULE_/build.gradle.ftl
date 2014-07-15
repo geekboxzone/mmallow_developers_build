@@ -93,6 +93,14 @@ android {
 <#else>
 </#if>
     }
+
+<#if sample.aapt?has_content>
+    aaptOptions {
+    <#list sample.aapt.noCompress as noCompress>
+        noCompress "${noCompress}"
+    </#list>
+    }
+</#if>
 }
 // BEGIN_EXCLUDE
 // Tasks below this line will be hidden from release output
