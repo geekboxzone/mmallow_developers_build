@@ -44,4 +44,4 @@
 
 
 <#-- Set the global build tools version -->
-<#assign build_tools_version='"19.0.1"'/>
+<#assign build_tools_version='"20"'/>
