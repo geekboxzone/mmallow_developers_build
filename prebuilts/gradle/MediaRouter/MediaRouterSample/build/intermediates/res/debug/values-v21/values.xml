@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/usr/local/google/home/naoki/android/lmp-preview-dev/developers/samples/android/media/MediaRouter/MediaRouterSample/src/template/res/values-v21/template-styles.xml -->
+    <eat-comment />
+
+    <style name="Theme.Base" parent="android:Theme.Material.Light" />
+
+</resources>

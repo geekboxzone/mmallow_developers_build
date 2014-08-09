@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.11.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
 
@@ -16,7 +16,8 @@ apply plugin: 'android'
 
 dependencies {
 
-
+    compile "com.android.support:support-v4:20.+"
+    compile "com.android.support:support-v13:20.+"
 
 }
 
@@ -31,7 +32,7 @@ List<String> dirs = [
 android {
     compileSdkVersion 19
 
-    buildToolsVersion "19.1.0"
+    buildToolsVersion "20.0.0"
 
     sourceSets {
         main {
@@ -44,6 +45,7 @@ android {
         androidTest.java.srcDirs = ['tests/src']
 
     }
+
 }
 
 
