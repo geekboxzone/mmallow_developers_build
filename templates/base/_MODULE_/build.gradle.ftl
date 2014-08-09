@@ -37,13 +37,13 @@ dependencies {
 
 <#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
   <#if sample.minSdk?is_number && sample.minSdk?number < 7>
-    compile "com.android.support:support-v4:19.1.+"
+    compile "com.android.support:support-v4:20.+"
   <#elseif sample.minSdk?is_number && sample.minSdk?number < 13>
-    compile "com.android.support:support-v4:19.1.+"
-    compile "com.android.support:gridlayout-v7:19.1.+"
+    compile "com.android.support:support-v4:20.+"
+    compile "com.android.support:gridlayout-v7:20.+"
   <#else>
-    compile "com.android.support:support-v4:19.1.+"
-    compile "com.android.support:support-v13:19.1.+"
+    compile "com.android.support:support-v4:20.+"
+    compile "com.android.support:support-v13:20.+"
   </#if>
 </#if>
 
