@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   Copyright 2013 The Android Open Source Project
 
@@ -15,10 +14,6 @@
   limitations under the License.
 -->
 <resources>
-
-    <!--
-        Generate an id which can be used when the location menu item is added in MainActivity
-    -->
-    <item name="menu_location" type="id"/>
-
+    <string name="sample_show_log">Show Log</string>
+    <string name="sample_hide_log">Hide Log</string>
 </resources>
