@@ -43,6 +43,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /*
  * LeanbackDetailsFragment extends DetailsFragment, a Wrapper fragment for leanback details screens.
@@ -83,7 +84,7 @@ public class LeanbackDetailsFragment extends DetailsFragment {
         new DetailRowBuilderTask().execute(selectedMovie);
 
         setOnItemClickedListener(getDefaultItemClickedListener());
-
+        updateBackground(selectedMovie.getBackgroundImageURI());
     }
 
     private class DetailRowBuilderTask extends AsyncTask<Movie, Integer, DetailsOverviewRow> {
@@ -103,7 +104,6 @@ public class LeanbackDetailsFragment extends DetailsFragment {
                         .centerCrop()
                         .get();
                 row.setImageBitmap(getActivity(), poster);
-                updateBackground(selectedMovie.getBackgroundImageURI());
             } catch (IOException e) {
             }
 
@@ -152,7 +152,7 @@ public class LeanbackDetailsFragment extends DetailsFragment {
             HashMap<String, List<Movie>> movies = VideoProvider.getMovieList();
 
             ArrayObjectAdapter listRowAdapter = new ArrayObjectAdapter(new CardPresenter());
-            for (HashMap.Entry<String, List<Movie>> entry : movies.entrySet())
+            for (Map.Entry<String, List<Movie>> entry : movies.entrySet())
             {
                 if (selectedMovie.getCategory().indexOf(entry.getKey()) >= 0) {
                     List<Movie> list = entry.getValue();
