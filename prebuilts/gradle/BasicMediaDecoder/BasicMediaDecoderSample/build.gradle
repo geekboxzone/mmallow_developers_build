@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
 
@@ -17,7 +17,7 @@ apply plugin: 'android'
 dependencies {
 
     // Add the support lib that is appropriate for SDK 17
-    compile "com.android.support:support-v13:19.1.+"
+    compile "com.android.support:support-v13:20.+"
 
 
 }
@@ -33,7 +33,7 @@ List<String> dirs = [
 android {
     compileSdkVersion 19
 
-    buildToolsVersion "19.0.1"
+    buildToolsVersion "19.1.0"
 
     sourceSets {
         main {
