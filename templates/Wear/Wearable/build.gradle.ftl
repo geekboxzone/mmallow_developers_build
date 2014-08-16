@@ -1,5 +1,5 @@
 <#--
- Copyright 2013 The Android Open Source Project
+ Copyright 2014 The Android Open Source Project
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -30,30 +30,13 @@ repositories {
 <#list sample.repository as rep>
     ${rep}
 </#list>
-}
-</#if>
+}</#if>
 
 dependencies {
-
-<#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
-    // Add the support lib that is appropriate for SDK ${sample.minSdk}
-  <#if sample.minSdk?number < 7>
-    compile "com.android.support:support-v4:20.+"
-  <#elseif sample.minSdk?number < 13>
-    compile "com.android.support:support-v4:20.+"
-    compile "com.android.support:gridlayout-v7:20.+"
-  <#else>
-    compile "com.android.support:support-v13:20.+"
-  </#if>
-
-</#if>
-
-<#list sample.dependency as dep>
-    compile "${dep}"
-</#list>
-<#list sample.dependency_external as dep>
-    compile files(${dep})
-</#list>
+    compile 'com.google.android.gms:play-services:5.0.+@aar'
+    compile 'com.android.support:support-v13:20.0.+'
+    compile 'com.google.android.support:wearable:1.0.+'
+    compile project(':Shared')
 }
 
 // The sample build uses multiple directories to
@@ -67,10 +50,16 @@ List<String> dirs = [
 android {
      <#-- Note that target SDK is hardcoded in this template. We expect all samples
           to always use the most current SDK as their target. -->
-    compileSdkVersion ${compile_sdk}
+    compileSdkVersion 'android-20'
 
-    buildToolsVersion "20"
+    buildToolsVersion '20'
 
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+    }
     sourceSets {
         main {
             dirs.each { dir ->
@@ -91,6 +80,7 @@ android {
 </#if>
     }
 }
+
 // BEGIN_EXCLUDE
 // Tasks below this line will be hidden from release output
 

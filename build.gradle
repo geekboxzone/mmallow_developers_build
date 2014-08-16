@@ -92,9 +92,9 @@ Map<String,String> collapsePaths(FileTree path, List<String> roots) {
         result.put(f.file.path, collapsedPath.toString());
     }
 
-    println ("******************** Results *************************")
+    println ("******************** Collapse results *********************")
 
-    result.each {entry -> println("${entry}\n\n");}
+    result.each {entry -> println("- ${entry}");}
     return result
 }
 
@@ -177,44 +177,57 @@ task emitGradle(type:Copy) {
 }
 
 task emitBrowseable(type:Copy) {
-    def outputPath =outPath("browseable");
-    def inputPath = "${project.projectDir}/${samplegen.targetSampleModule()}"
-    into outputPath
-
+    def outputPathRoot = outPath("browseable")
+    def modules = project.childProjects.keySet()
+    def hasMultipleModules = modules.size() > 1
+    println "---------------- modules found in sample: ${modules}"
+    into outputPathRoot
     from("${project.projectDir}/_index.jd")
-    def srcDirs = ["main", "common", "template"].collect {input -> "${inputPath}/src/${input}" };
-    def javaDirs = srcDirs.collect { input -> "${input}/java"}
-    FileTree javaTree = null;
-    javaDirs.each { dir ->
-        FileTree tree = project.fileTree("${dir}")
-        javaTree = (javaTree == null) ? tree : javaTree.plus(tree)}
-    println javaTree;
-    println srcDirs
-    Map collapsedPaths = collapsePaths(javaTree, javaDirs)
 
-    srcDirs.each { srcPath ->
-        println srcPath;
-        duplicatesStrategy = 'fail'
-        into("src") {
-            def javaPath = "${srcPath}/java";
-            from(javaPath)
-            include(["**/*.java", "**/*.xml"])
-            eachFile { FileCopyDetails fcd ->
-                if (fcd.file.isFile()) {
-                    def filename = fcd.name;
-                    String collapsed = collapsedPaths.get(fcd.file.path);
-                    fcd.path = "src/${collapsed}";
-                } else {fcd.exclude()}
+    modules.each { moduleName ->
+        // For single module samples (default), we emit the module contents
+        // directly to the root of the browseable sample:
+        def outputPath = "."
+        if (hasMultipleModules) {
+          // For multi module samples, we need an extra directory level
+          // to separate modules:
+          outputPath = "${moduleName}"
+        }
+        println "\n---------------- processing MODULE ${moduleName} to outputPath ${outputPath}"
+        def inputPath = "${project.projectDir}/${moduleName}"
+
+        def srcDirs = ["main", "common", "template"].collect {input -> "${inputPath}/src/${input}" };
+        def javaDirs = srcDirs.collect { input -> "${input}/java"}
+        FileTree javaTree = null;
+        javaDirs.each { dir ->
+            FileTree tree = project.fileTree("${dir}")
+            javaTree = (javaTree == null) ? tree : javaTree.plus(tree)}
+        Map collapsedPaths = collapsePaths(javaTree, javaDirs)
+
+        srcDirs.each { srcPath ->
+            print "** Copying source ${srcPath}...";
+            duplicatesStrategy = 'fail'
+            into("${outputPath}/src") {
+                def javaPath = "${srcPath}/java";
+                from(javaPath)
+                include(["**/*.java", "**/*.xml"])
+                eachFile { FileCopyDetails fcd ->
+                    if (fcd.file.isFile()) {
+                        def filename = fcd.name;
+                        String collapsed = collapsedPaths.get(fcd.file.path);
+                        fcd.path = "${outputPath}/src/${collapsed}";
+                    } else {fcd.exclude()}
+                }
+                println "done"
             }
-            println "***************** done"
+            into("${outputPath}/res") {
+                from("${srcPath}/res")
+            }
+            into("${outputPath}/src/rs") {
+                from("${srcPath}/rs")
+            }
+            into("${outputPath}") {from("${srcPath}/AndroidManifest.xml")}
         }
-        into("res") {
-            from("${srcPath}/res")
-        }
-        into("src/rs") {
-            from("${srcPath}/rs")
-        }
-        into(".") {from("${srcPath}/AndroidManifest.xml")}
     }
 }
 
