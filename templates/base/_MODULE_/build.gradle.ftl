@@ -69,7 +69,7 @@ android {
           to always use the most current SDK as their target. -->
     compileSdkVersion ${compile_sdk}
 
-    buildToolsVersion "19.1.0"
+    buildToolsVersion "20"
 
     sourceSets {
         main {
