@@ -19,11 +19,11 @@
     <group>NoGroup</group>
     <package>${sample.package}</package>
 
-
-
     <!-- change minSdk if needed-->
     <minSdk>${sample.minSdk}</minSdk>
 
+    <!-- Include additional dependencies here.-->
+    <!-- dependency>com.google.android.gms:play-services:5.0.+</dependency -->
 
     <strings>
         <intro>
@@ -34,7 +34,15 @@
         </intro>
     </strings>
 
-    <template src="base"/>
-    <common src="logger"/>
+    <!-- The basic templates have already been enabled. Uncomment more as desired. -->
+    <template src="base" />
+    <!-- template src="ActivityCards" / -->
+    <!-- template src="FragmentView" / -->
+    <!-- template src="CardStream" / -->
+    <!-- template src="SimpleView" / -->
+    <template src="SingleView" />
 
+    <!-- Include common code modules by uncommenting them below. -->
+    <common src="logger" />
+    <!-- common src="activities"/ -->
 </sample>
