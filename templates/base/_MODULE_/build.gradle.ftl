@@ -36,19 +36,15 @@ repositories {
 dependencies {
 
 <#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
-  <#if sample.minSdk?is_number >
-  // Add the support lib that is appropriate for SDK ${sample.minSdk}
-  <#if sample.minSdk?number < 7>
-    compile "com.android.support:support-v4:19.1.+"
-  <#elseif sample.minSdk?number < 13>
-    compile "com.android.support:support-v4:19.1.+"
-    compile "com.android.support:gridlayout-v7:19.1.+"
-  <#elseif sample.minSdk?number < 20>
-    compile "com.android.support:support-v4:19.1.+"
-    compile "com.android.support:support-v13:19.1.+"
+  <#if sample.minSdk?is_number && sample.minSdk?number < 7>
+    compile "com.android.support:support-v4:20.+"
+  <#elseif sample.minSdk?is_number && sample.minSdk?number < 13>
+    compile "com.android.support:support-v4:20.+"
+    compile "com.android.support:gridlayout-v7:20.+"
+  <#else>
+    compile "com.android.support:support-v4:20.+"
+    compile "com.android.support:support-v13:20.+"
   </#if>
-  </#if>
-
 </#if>
 
 <#list sample.dependency as dep>
@@ -72,7 +68,7 @@ android {
           to always use the most current SDK as their target. -->
     compileSdkVersion ${compile_sdk}
 
-    buildToolsVersion "20"
+    buildToolsVersion "20.0.0"
 
     sourceSets {
         main {
@@ -93,6 +89,14 @@ android {
 <#else>
 </#if>
     }
+
+<#if sample.aapt?has_content>
+    aaptOptions {
+    <#list sample.aapt.noCompress as noCompress>
+        noCompress "${noCompress}"
+    </#list>
+    }
+</#if>
 }
 // BEGIN_EXCLUDE
 // Tasks below this line will be hidden from release output
