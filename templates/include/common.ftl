@@ -20,7 +20,6 @@
 <#elseif meta.outputFile?ends_with("xml")>
     <#include "xml-style-copyright.ftl">
 </#if>
-
 <#-- Set the compile SDK version. This is more complicated than it should be, because
       the version can be either a number or a string (e.g. KeyLimePie) so we need to test
       both to see if the variable is empty.  Note that to freemarker, all values from
@@ -41,7 +40,5 @@
 <#else>
     <#assign compile_sdk = 19/>
 </#if>
-
-
 <#-- Set the global build tools version -->
 <#assign build_tools_version='"20"'/>
