@@ -14,9 +14,6 @@
 * limitations under the License.
 */
 
-
-
-
 package com.example.android.swiperefreshmultipleviews;
 
 import android.os.Bundle;
