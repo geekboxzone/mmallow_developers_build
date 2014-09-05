@@ -79,8 +79,6 @@ android {
 </#noparse>
             }
         }
-        androidTest.setRoot('tests')
-        androidTest.java.srcDirs = ['tests/src']
 
 <#if sample.defaultConfig?has_content>
         defaultConfig {
