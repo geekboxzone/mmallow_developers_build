@@ -1,5 +1,5 @@
 <#--
- Copyright 2013 The Android Open Source Project
+ Copyright 2014 The Android Open Source Project
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -30,29 +30,13 @@ repositories {
 <#list sample.repository as rep>
     ${rep}
 </#list>
-}
-</#if>
+}</#if>
 
 dependencies {
-
-<#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
-  <#if sample.minSdk?is_number && sample.minSdk?number < 7>
-    compile "com.android.support:support-v4:19.1.+"
-  <#elseif sample.minSdk?is_number && sample.minSdk?number < 13>
-    compile "com.android.support:support-v4:19.1.+"
-    compile "com.android.support:gridlayout-v7:19.1.+"
-  <#else>
-    compile "com.android.support:support-v4:19.1.+"
-    compile "com.android.support:support-v13:19.1.+"
-  </#if>
-</#if>
-
-<#list sample.dependency as dep>
-    compile "${dep}"
-</#list>
-<#list sample.dependency_external as dep>
-    compile files(${dep})
-</#list>
+    compile 'com.google.android.gms:play-services:5.0.+@aar'
+    compile 'com.android.support:support-v13:20.0.+'
+    compile 'com.google.android.support:wearable:1.0.+'
+    compile project(':Shared')
 }
 
 // The sample build uses multiple directories to
@@ -66,10 +50,16 @@ List<String> dirs = [
 android {
      <#-- Note that target SDK is hardcoded in this template. We expect all samples
           to always use the most current SDK as their target. -->
-    compileSdkVersion ${compile_sdk}
+    compileSdkVersion 'android-20'
 
-    buildToolsVersion "20"
+    buildToolsVersion '20'
 
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+    }
     sourceSets {
         main {
             dirs.each { dir ->
@@ -89,15 +79,8 @@ android {
 <#else>
 </#if>
     }
-
-<#if sample.aapt?has_content>
-    aaptOptions {
-    <#list sample.aapt.noCompress as noCompress>
-        noCompress "${noCompress}"
-    </#list>
-    }
-</#if>
 }
+
 // BEGIN_EXCLUDE
 // Tasks below this line will be hidden from release output
 
