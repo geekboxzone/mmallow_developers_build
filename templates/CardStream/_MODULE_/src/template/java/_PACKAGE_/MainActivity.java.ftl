@@ -56,7 +56,7 @@ public class MainActivity extends SampleActivityBase implements CardStream {
         }
 
         // Use fragment as click listener for cards, but must implement correct interface
-        if(!(fragment instanceof OnCardClickListener)){
+        if (!(fragment instanceof OnCardClickListener)){
             throw new ClassCastException("${sample.name?cap_first}Fragment must " +
                     "implement OnCardClickListener interface.");
         }
