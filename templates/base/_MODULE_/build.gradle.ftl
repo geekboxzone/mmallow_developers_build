@@ -37,13 +37,13 @@ dependencies {
 
 <#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
   <#if sample.minSdk?is_number && sample.minSdk?number < 7>
-    compile "com.android.support:support-v4:19.1.+"
+    compile "com.android.support:support-v4:21.+"
   <#elseif sample.minSdk?is_number && sample.minSdk?number < 13>
-    compile "com.android.support:support-v4:19.1.+"
-    compile "com.android.support:gridlayout-v7:19.1.+"
+    compile "com.android.support:support-v4:21.+"
+    compile "com.android.support:gridlayout-v7:21.+"
   <#else>
-    compile "com.android.support:support-v4:19.1.+"
-    compile "com.android.support:support-v13:19.1.+"
+    compile "com.android.support:support-v4:21.+"
+    compile "com.android.support:support-v13:21.+"
   </#if>
 </#if>
 
@@ -68,7 +68,7 @@ android {
           to always use the most current SDK as their target. -->
     compileSdkVersion ${compile_sdk}
 
-    buildToolsVersion "20"
+    buildToolsVersion "21.0.0rc1"
 
     sourceSets {
         main {
