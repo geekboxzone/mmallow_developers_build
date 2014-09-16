@@ -39,5 +39,6 @@ SAMPLES_COMMON=$( cd $SCRIPTPATH/../samples/android/common ; pwd -P)
 COMMONPATH=$(perl -e "use File::Spec; print File::Spec->abs2rel(@ARGV)" $SAMPLES_COMMON $SAMPLE_PATH)
 
 # Launch a Gradle build with the SampleGen creation parameters on the command line
-$GRADLE -b $SCRIPTPATH/build.gradle --info create -Pout=$SAMPLE_PATH \
+# Note: Daemon disabled since the script reads for System.console. This overrides user settings.
+$GRADLE -b $SCRIPTPATH/build.gradle --info --no-daemon create -Pout=$SAMPLE_PATH \
     -PcalledFrom=$CALLED_FROM -PpathToSamplesCommon=$COMMONPATH -PpathToBuild=$BUILDPATH

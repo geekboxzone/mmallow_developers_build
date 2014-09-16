@@ -23,7 +23,7 @@ buildscript {
     }
 }
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 <#if sample.repository?has_content>
 repositories {

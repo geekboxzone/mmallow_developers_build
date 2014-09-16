@@ -95,7 +95,7 @@ class SampleGenProperties {
      * The name of the main module in the sample project
      */
     String targetSampleModule() {
-        return "${targetSampleName()}Sample"
+        return "Application"
     }
 
     /**
