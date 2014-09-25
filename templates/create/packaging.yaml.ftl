@@ -6,7 +6,7 @@
 
 status:       PUBLISHED
 technologies: [Android]
-categories:   [${sample.group}]
+categories:   [${sample.group!"None"}]
 languages:    [Java]
 solutions:    [Mobile]
 github:       googlesamples/android-${sample.name}
