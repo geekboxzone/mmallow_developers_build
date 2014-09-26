@@ -33,7 +33,7 @@ repositories {
 }</#if>
 
 dependencies {
-    compile 'com.google.android.gms:play-services:5.0.+@aar'
+    compile 'com.google.android.gms:play-services-wearable:5.0.+'
     compile 'com.android.support:support-v13:20.0.+'
     compile 'com.google.android.support:wearable:1.0.+'
     compile project(':Shared')
