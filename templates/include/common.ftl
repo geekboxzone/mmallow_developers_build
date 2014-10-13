@@ -38,7 +38,7 @@
 <#elseif (sample.compileSdkVersion)?has_content>
     <#assign compile_sdk = sample.compileSdkVersion/>
 <#else>
-    <#assign compile_sdk = "\"android-L\""/>
+    <#assign compile_sdk = "\"android-21\""/>
 </#if>
 <#-- Set the global build tools version -->
-<#assign build_tools_version='"20"'/>
+<#assign build_tools_version='"21.0.0"'/>
