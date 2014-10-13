@@ -36,9 +36,9 @@ repositories {
 dependencies {
 
 <#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
-  <#if sample.minSdk?is_number && sample.minSdk?number < 7>
+  <#if sample.minSdk?matches(r'^\d+$') && sample.minSdk?number < 7>
     compile "com.android.support:support-v4:21.+"
-  <#elseif sample.minSdk?is_number && sample.minSdk?number < 13>
+  <#elseif sample.minSdk?matches(r'^\d+$') && sample.minSdk?number < 13>
     compile "com.android.support:support-v4:21.+"
     compile "com.android.support:gridlayout-v7:21.+"
   <#else>
@@ -68,7 +68,7 @@ android {
           to always use the most current SDK as their target. -->
     compileSdkVersion ${compile_sdk}
 
-    buildToolsVersion "21.0.0"
+    buildToolsVersion ${build_tools_version}
 
     sourceSets {
         main {
