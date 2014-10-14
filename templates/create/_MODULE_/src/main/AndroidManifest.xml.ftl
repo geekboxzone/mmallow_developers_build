@@ -19,9 +19,6 @@
     android:versionCode="1"
     android:versionName="1.0">
 
-    <uses-sdk android:minSdkVersion="${sample.minSdk}"
-        android:targetSdkVersion="20" />
-
     <application android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
