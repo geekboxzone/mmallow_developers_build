@@ -41,9 +41,11 @@ dependencies {
   <#elseif sample.minSdk?matches(r'^\d+$') && sample.minSdk?number < 13>
     compile "com.android.support:support-v4:21.+"
     compile "com.android.support:gridlayout-v7:21.+"
+    compile "com.android.support:cardview-v7:21.+"
   <#else>
     compile "com.android.support:support-v4:21.+"
     compile "com.android.support:support-v13:21.+"
+    compile "com.android.support:cardview-v7:21.+"
   </#if>
 </#if>
 
