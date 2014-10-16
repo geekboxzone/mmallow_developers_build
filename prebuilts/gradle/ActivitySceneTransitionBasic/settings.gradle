@@ -1,4 +1,1 @@
-
-
-
-include 'ActivitySceneTransitionBasicSample'
+include 'Application'
