@@ -105,6 +105,7 @@ public class BasicManagedProfileFragment extends Fragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // Bind event listeners and initial states
         view.findViewById(R.id.set_chrome_restrictions).setOnClickListener(this);
+        view.findViewById(R.id.clear_chrome_restrictions).setOnClickListener(this);
         view.findViewById(R.id.enable_forwarding).setOnClickListener(this);
         view.findViewById(R.id.disable_forwarding).setOnClickListener(this);
         view.findViewById(R.id.send_intent).setOnClickListener(this);
@@ -123,6 +124,10 @@ public class BasicManagedProfileFragment extends Fragment
         switch (view.getId()) {
             case R.id.set_chrome_restrictions: {
                 setChromeRestrictions();
+                break;
+            }
+            case R.id.clear_chrome_restrictions: {
+                clearChromeRestrictions();
                 break;
             }
             case R.id.enable_forwarding: {
@@ -234,6 +239,24 @@ public class BasicManagedProfileFragment extends Fragment
                     }
                 })
                 .show();
+    }
+
+    /**
+     * Clears restrictions to Chrome
+     */
+    private void clearChromeRestrictions() {
+        final Activity activity = getActivity();
+        if (null == activity) {
+            return;
+        }
+        final DevicePolicyManager manager =
+                (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
+        // In order to clear restrictions, pass null as the restriction Bundle for
+        // setApplicationRestrictions
+        manager.setApplicationRestrictions
+                (BasicDeviceAdminReceiver.getComponentName(activity),
+                        PACKAGE_NAME_CHROME, null);
+        Toast.makeText(activity, R.string.cleared, Toast.LENGTH_SHORT).show();
     }
 
     /**
