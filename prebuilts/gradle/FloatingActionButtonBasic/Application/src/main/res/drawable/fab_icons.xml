@@ -15,7 +15,8 @@
  limitations under the License.
 -->
 
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:enterFadeDuration="@android:integer/config_shortAnimTime">
 
     <item android:state_checked="true">
         <bitmap android:src="@drawable/ic_tick" android:tint="@android:color/white" />

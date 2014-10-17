@@ -63,6 +63,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 public class Camera2BasicFragment extends Fragment implements View.OnClickListener {
 
@@ -167,18 +169,21 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         @Override
         public void onOpened(CameraDevice cameraDevice) {
             // This method is called when the camera is opened.  We start camera preview here.
+            mCameraOpenCloseLock.release();
             mCameraDevice = cameraDevice;
             createCameraPreviewSession();
         }
 
         @Override
         public void onDisconnected(CameraDevice cameraDevice) {
+            mCameraOpenCloseLock.release();
             cameraDevice.close();
             mCameraDevice = null;
         }
 
         @Override
         public void onError(CameraDevice cameraDevice, int error) {
+            mCameraOpenCloseLock.release();
             cameraDevice.close();
             mCameraDevice = null;
             Activity activity = getActivity();
@@ -239,6 +244,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      * @see #mCaptureCallback
      */
     private int mState = STATE_PREVIEW;
+
+    /**
+     * A {@link Semaphore} to prevent the app from exiting before closing the camera.
+     */
+    private Semaphore mCameraOpenCloseLock = new Semaphore(1);
 
     /**
      * A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
@@ -449,9 +459,14 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
         Activity activity = getActivity();
         CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
         try {
+            if (!mCameraOpenCloseLock.tryAcquire(2500, TimeUnit.MILLISECONDS)) {
+                throw new RuntimeException("Time out waiting to lock camera opening.");
+            }
             manager.openCamera(mCameraId, mStateCallback, mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Interrupted while trying to lock camera opening.", e);
         }
     }
 
@@ -459,17 +474,24 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
      * Closes the current {@link CameraDevice}.
      */
     private void closeCamera() {
-        if (null != mCaptureSession) {
-            mCaptureSession.close();
-            mCaptureSession = null;
-        }
-        if (null != mCameraDevice) {
-            mCameraDevice.close();
-            mCameraDevice = null;
-        }
-        if (null != mImageReader) {
-            mImageReader.close();
-            mImageReader = null;
+        try {
+            mCameraOpenCloseLock.acquire();
+            if (null != mCaptureSession) {
+                mCaptureSession.close();
+                mCaptureSession = null;
+            }
+            if (null != mCameraDevice) {
+                mCameraDevice.close();
+                mCameraDevice = null;
+            }
+            if (null != mImageReader) {
+                mImageReader.close();
+                mImageReader = null;
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Interrupted while trying to lock camera closing.", e);
+        } finally {
+            mCameraOpenCloseLock.release();
         }
     }
 
@@ -521,6 +543,11 @@ public class Camera2BasicFragment extends Fragment implements View.OnClickListen
 
                         @Override
                         public void onConfigured(CameraCaptureSession cameraCaptureSession) {
+                            // The camera is already closed
+                            if (null == mCameraDevice) {
+                                return;
+                            }
+
                             // When the session is ready, we start displaying the preview.
                             mCaptureSession = cameraCaptureSession;
                             try {
