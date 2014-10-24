@@ -40,8 +40,9 @@ import com.google.android.gms.wearable.PutDataMapRequest;
 import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 /**
@@ -190,8 +191,8 @@ public class SynchronizedNotificationsFragment extends Fragment
      * Returns a string built from the current time
      */
     private String now() {
-        DateFormat dateFormat = android.text.format.DateFormat.getTimeFormat(this.getActivity());
-        return dateFormat.format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date())
     }
 
 }
