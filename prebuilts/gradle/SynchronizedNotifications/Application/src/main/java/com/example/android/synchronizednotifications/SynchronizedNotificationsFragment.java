@@ -192,7 +192,7 @@ public class SynchronizedNotificationsFragment extends Fragment
      */
     private String now() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-        return sdf.format(new Date())
+        return sdf.format(new Date());
     }
 
 }
