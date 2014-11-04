@@ -52,7 +52,7 @@ android {
           to always use the most current SDK as their target. -->
     compileSdkVersion 'android-20'
 
-    buildToolsVersion '20'
+    buildToolsVersion  ${build_tools_version}
 
     buildTypes {
         release {

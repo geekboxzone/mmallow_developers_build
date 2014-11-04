@@ -38,7 +38,7 @@ android {
           to always use the most current SDK as their target. -->
     compileSdkVersion ${compile_sdk}
 
-    buildToolsVersion '20'
+    buildToolsVersion  ${build_tools_version}
 
     sourceSets {
         main {
