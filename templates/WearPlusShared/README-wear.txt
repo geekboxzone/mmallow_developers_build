@@ -1,4 +1,3 @@
-<#ftl>
 <#--
         Copyright 2014 The Android Open Source Project
 
@@ -14,4 +13,18 @@
         See the License for the specific language governing permissions and
         limitations under the License.
 -->
-include ':${meta.module}', ':Wearable'
+
+Steps to use Wear template on top of an existing sample:
+- In template-params.xml.ftl:
+    - Add the following template:
+        <template src="Wear"/>
+
+- Refresh your project (./gradlew refresh)
+- Add Wearable-specific code to Wearable directory
+- Add code to be shared among the main application and the wearable to Shared
+  directory
+
+Note that you still need the main application sample code. This is usually
+achieved by adding another template, like "base" for example.
+
+
