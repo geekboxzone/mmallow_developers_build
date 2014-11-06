@@ -45,7 +45,6 @@ dependencies {
     <#-- TODO: use sample variables to set these dependencies -->
     compile 'com.google.android.gms:play-services:5.0.+'
     compile 'com.android.support:support-v13:20.0.+'
-    compile project(':Shared')
     wearApp project(':Wearable')
 
 }
