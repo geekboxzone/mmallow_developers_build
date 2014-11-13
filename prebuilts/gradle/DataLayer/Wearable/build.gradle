@@ -29,7 +29,7 @@ List<String> dirs = [
 android {
     compileSdkVersion 'android-20'
 
-    buildToolsVersion  "21.0.0"
+    buildToolsVersion '20'
 
     buildTypes {
         release {
