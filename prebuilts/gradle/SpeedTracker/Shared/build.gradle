@@ -21,7 +21,7 @@ List<String> dirs = [
 android {
     compileSdkVersion 21
 
-    buildToolsVersion  "21.0.0"
+    buildToolsVersion "21.0.0"
 
     sourceSets {
         main {
