@@ -13,7 +13,19 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient" >
 
-<resources>
-    <color name="divider_text">@android:color/holo_blue_dark</color>
-</resources>
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:background="@drawable/shape"
+        android:text="@string/custom_fragment_text" 
+        android:textColor="@color/primary_text_light"/>
+
+</FrameLayout>
