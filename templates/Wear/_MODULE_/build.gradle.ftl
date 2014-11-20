@@ -42,11 +42,9 @@ dependencies {
     compile files(${dep})
 </#list>
 
-    <#-- TODO: use sample variables to set these dependencies -->
-    compile 'com.google.android.gms:play-services:5.0.+'
-    compile 'com.android.support:support-v13:20.0.+'
+    compile ${play_services_dependency}
+    compile ${android_support_v13_dependency}
     wearApp project(':Wearable')
-
 }
 
 // The sample build uses multiple directories to
@@ -60,7 +58,7 @@ List<String> dirs = [
 android {
     compileSdkVersion ${compile_sdk}
 
-    buildToolsVersion  ${build_tools_version}
+    buildToolsVersion ${build_tools_version}
 
     defaultConfig {
         minSdkVersion ${min_sdk}
