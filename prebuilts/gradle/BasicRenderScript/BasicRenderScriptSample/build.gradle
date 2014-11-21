@@ -4,18 +4,20 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.11.+'
+        classpath 'com.android.tools.build:gradle:0.12.+'
     }
 }
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 
 dependencies {
 
 
-
-    compile files('renderscript-v8.jar')
+    compile 'com.google.android.gms:play-services:6.5.+'
+    compile 'com.android.support:support-v13:21.0.+'
+    compile project(':Shared')
+    wearApp project(':Wearable')
 }
 
 // The sample build uses multiple directories to
@@ -29,10 +31,10 @@ List<String> dirs = [
 android {
     compileSdkVersion 21
 
-    buildToolsVersion  "21.0.0"
+    buildToolsVersion "21.0.0"
 
     defaultConfig {
-        minSdkVersion 20
+        minSdkVersion 18
         targetSdkVersion 21
     }
 
@@ -46,13 +48,8 @@ android {
         androidTest.setRoot('tests')
         androidTest.java.srcDirs = ['tests/src']
 
-        defaultConfig {
-        
-            renderscriptTargetApi 18
-            renderscriptSupportMode true
-    
-        }
     }
+
 }
 
 
