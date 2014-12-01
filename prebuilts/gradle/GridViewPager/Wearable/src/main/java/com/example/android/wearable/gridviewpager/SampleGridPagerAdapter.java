@@ -116,7 +116,12 @@ public class SampleGridPagerAdapter extends FragmentGridPagerAdapter {
 
     private Fragment cardFragment(int titleRes, int textRes) {
         Resources res = mContext.getResources();
-        return CardFragment.create(res.getText(titleRes), res.getText(textRes));
+        CardFragment fragment =
+                CardFragment.create(res.getText(titleRes), res.getText(textRes));
+        // Add some extra bottom margin to leave room for the page indicator
+        fragment.setCardMarginBottom(
+                res.getDimensionPixelSize(R.dimen.card_margin_bottom));
+        return fragment;
     }
 
     static final int[] BG_IMAGES = new int[] {
