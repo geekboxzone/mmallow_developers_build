@@ -53,7 +53,7 @@ To make it compatible with Android Auto, you also need to:
        android:resource="@xml/automotive_app_desc"/>
 ```
 
-  And in res/values/automotive\_app\_desc.xml:
+  And in res/xml/automotive\_app\_desc.xml:
 ```
       <?xml version="1.0" encoding="utf-8"?>
       <automotiveApp>
@@ -61,7 +61,7 @@ To make it compatible with Android Auto, you also need to:
       </automotiveApp>
 ```
 
-- declare and export the service in AndroidManifest:
+- declare and export the service in AndroidManifest.xml:
 ```
     <service
         android:name=".service.MusicService"
@@ -83,12 +83,6 @@ Getting Started
 
 This sample uses the Gradle build system. To build this project, use the
 "gradlew build" command or use "Import Project" in Android Studio.
-
-Screenshots
------------
-
-<!-- Update these to point to screenshots. Add more as needed. -->
-![Description](screenshots/image1.png) ![Description](screenshots/image2.png)
 
 Support
 -------
