@@ -3,7 +3,7 @@
 
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -12,6 +12,10 @@ buildscript {
 }
 
 apply plugin: 'android'
+
+repositories {
+    jcenter()
+}
 
 
 dependencies {
