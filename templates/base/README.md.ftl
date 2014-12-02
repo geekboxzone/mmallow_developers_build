@@ -1,8 +1,11 @@
 Android ${sample.name} Sample
 ===================================
 
+<#if sample.metadata.description?is_node>
 ${sample.metadata.description?trim?replace('\\n\\n', '\n')?replace('\\"', '"')?replace('\t+', '', 'r')?replace('(^\n+|\n+$)', '', 'r')}
-<#if sample.metadata.intro?is_node>
+<#else>
+${sample.strings.intro?trim?replace('\\n\\n', '\n')?replace('\\"', '"')?replace('\t+', '', 'r')?replace('  +', '', 'r')?replace("\\\\'", "'", 'r')?replace('\\"', '"', 'r')?replace('(^\n+|\n+$)', '', 'r')}
+</#if><#if sample.metadata.intro?is_node>
 
 Introduction
 ------------
