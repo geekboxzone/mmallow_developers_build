@@ -65,7 +65,6 @@
 <#-- Set the global build tools version -->
 <#assign build_tools_version='"21.0.0"'/>
 
-<#assign play_services_dependency="'com.google.android.gms:play-services:6.5.+'"/>
 <#assign play_services_wearable_dependency="'com.google.android.gms:play-services-wearable:6.5.+'"/>
 
 <#assign android_support_v13_dependency="'com.android.support:support-v13:21.0.+'"/>
