@@ -6,14 +6,14 @@
 ##
 ##############################################################################
 
-#replace with auth token for google-automerger GitHub account
+##replace with auth token for google-automerger GitHub account
 TOKEN=herpderp
 
-#make temporary dir to pull code into - delete at end.
+##make temporary dir to pull code into - delete at end.
 mkdir github-temp
 cd github-temp
 
-#iterate through samples
+##iterate through samples
 for i in $(ls ../prebuilts/gradle);
 
 
@@ -21,28 +21,26 @@ for i in $(ls ../prebuilts/gradle);
 #foo="ActionBarCompat-Basic"
 #foo="ActionBarCompat-Basic herpderp"
 #foo="ActionBarCompat-Basic ActionBarCompat-ListPopupMenu"
+#foo="MediaBrowserService MessagingService"
 #for i in $foo;
 
 do
-#echo $i
+echo "
+$i"
 
 URL=https://github.com/googlesamples/android-$i
 
 result=$(curl -o /dev/null --silent --head --write-out '%{http_code}' "$URL")
 #echo "$result $URL"
 
-#git clone https://github.com/googlesamples/android-$i.git
-
- #checking to see if they're in the list
+##checking to see if the repo exists
 if [ "$result" != "200" ]; then
-   echo "
-Cannot access repo for $i, it may not exist yet" 
+   echo "Cannot access repo for $i, it may not exist yet"
 else
-   echo "
-Updating repo for $i"
+   echo "Updating repo for $i"
 
 git clone $URL.git
-#check to make sure it worked and the folder is there
+##check to make sure it worked and the folder is there
 if [ -d "android-$i" ]; then
    rsync -az --delete --exclude '*.git' ../prebuilts/gradle/$i/ ./android-$i/
 
@@ -66,6 +64,6 @@ fi
 fi
 done
 
-#cleanup
+##cleanup
 cd ..
 rm -rf ./github-temp
