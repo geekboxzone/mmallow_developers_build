@@ -56,6 +56,11 @@ android {
 
     buildToolsVersion ${build_tools_version}
 
+    defaultConfig {
+        versionCode 1
+        versionName "1.0"
+    }
+
     buildTypes {
         release {
             minifyEnabled false

@@ -63,6 +63,8 @@ android {
     defaultConfig {
         minSdkVersion ${min_sdk}
         targetSdkVersion ${compile_sdk}
+        versionCode 1
+        versionName "1.0"
     }
 
     sourceSets {
