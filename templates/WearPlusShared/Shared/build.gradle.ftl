@@ -38,6 +38,11 @@ android {
 
     buildToolsVersion ${build_tools_version}
 
+    defaultConfig {
+        minSdkVersion ${min_sdk}
+        targetSdkVersion ${compile_sdk}
+    }
+
     sourceSets {
         main {
             dirs.each { dir ->
