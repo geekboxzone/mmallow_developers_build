@@ -42,7 +42,7 @@ dependencies {
     compile files(${dep})
 </#list>
 
-    compile ${play_services_dependency}
+    compile ${play_services_wearable_dependency}
     compile ${android_support_v13_dependency}
     compile project(':Shared')
     wearApp project(':Wearable')
