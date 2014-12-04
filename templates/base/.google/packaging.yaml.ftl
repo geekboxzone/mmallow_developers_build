@@ -15,7 +15,7 @@ level:        ${sample.metadata.level}
 </#if><#if sample.metadata.icon?is_node>
 icon:         ${sample.metadata.icon}
 </#if><#if sample.metadata.api_refs?is_node>
-api_refs:
+apiRefs:
 <#list sample.metadata.api_refs.android as ref>
     - android:${ref}
 </#list>
