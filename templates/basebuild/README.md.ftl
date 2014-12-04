@@ -24,7 +24,7 @@ Pre-requisites
 Screenshots
 -------------
 
-<#list sample.metadata.screenshots.img as img><img src=${img} height="400" alt="Screenshot"/> </#list>
+<#list sample.metadata.screenshots.img as img><img src="${img}" height="400" alt="Screenshot"/> </#list>
 </#if>
 
 Getting Started
