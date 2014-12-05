@@ -24,6 +24,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -129,10 +130,10 @@ public class CalendarWatchFaceService extends CanvasWatchFaceService {
         }
 
         @Override
-        public void onDraw(Canvas canvas) {
+        public void onDraw(Canvas canvas, Rect bounds) {
             // Create or update mLayout if necessary.
-            if (mLayout == null || mLayoutWidth != canvas.getWidth()) {
-                mLayoutWidth = canvas.getWidth();
+            if (mLayout == null || mLayoutWidth != bounds.width()) {
+                mLayoutWidth = bounds.width();
                 mLayout = new DynamicLayout(mEditable, mTextPaint, mLayoutWidth,
                         Layout.Alignment.ALIGN_NORMAL, 1 /* spacingMult */, 0 /* spacingAdd */,
                         false /* includePad */);

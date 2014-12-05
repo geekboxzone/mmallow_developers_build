@@ -23,6 +23,7 @@ import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -104,10 +105,10 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                             Log.v(TAG, "updating time");
                         }
                         invalidate();
-                        if (isVisible()) {
+                        if (shouldTimerBeRunning()) {
                             long timeMs = System.currentTimeMillis();
-                            long delayMs = mInteractiveUpdateRateMs
-                                    - (timeMs % mInteractiveUpdateRateMs);
+                            long delayMs =
+                                    mInteractiveUpdateRateMs - (timeMs % mInteractiveUpdateRateMs);
                             mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs);
                         }
                         break;
@@ -207,6 +208,9 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
 
         @Override
         public void onVisibilityChanged(boolean visible) {
+            if (Log.isLoggable(TAG, Log.DEBUG)) {
+                Log.d(TAG, "onVisibilityChanged: " + visible);
+            }
             super.onVisibilityChanged(visible);
 
             if (visible) {
@@ -217,11 +221,7 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                 // Update time zone in case it changed while we weren't visible.
                 mTime.clear(TimeZone.getDefault().getID());
                 mTime.setToNow();
-
-                mUpdateTimeHandler.sendEmptyMessage(MSG_UPDATE_TIME);
             } else {
-                mUpdateTimeHandler.removeMessages(MSG_UPDATE_TIME);
-
                 unregisterReceiver();
 
                 if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
@@ -229,6 +229,10 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                     mGoogleApiClient.disconnect();
                 }
             }
+
+            // Whether the timer should be running depends on whether we're visible (as well as
+            // whether we're in ambient mode), so we may need to start or stop the timer.
+            updateTimer();
         }
 
         private void registerReceiver() {
@@ -300,18 +304,18 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
 
         @Override
         public void onAmbientModeChanged(boolean inAmbientMode) {
+            super.onAmbientModeChanged(inAmbientMode);
             if (Log.isLoggable(TAG, Log.DEBUG)) {
                 Log.d(TAG, "onAmbientModeChanged: " + inAmbientMode);
             }
-            super.onAmbientModeChanged(inAmbientMode);
             adjustPaintColorToCurrentMode(mBackgroundPaint, mInteractiveBackgroundColor,
                     DigitalWatchFaceUtil.COLOR_VALUE_DEFAULT_AND_AMBIENT_BACKGROUND);
             adjustPaintColorToCurrentMode(mHourPaint, mInteractiveHourDigitsColor,
                     DigitalWatchFaceUtil.COLOR_VALUE_DEFAULT_AND_AMBIENT_HOUR_DIGITS);
             adjustPaintColorToCurrentMode(mMinutePaint, mInteractiveMinuteDigitsColor,
                     DigitalWatchFaceUtil.COLOR_VALUE_DEFAULT_AND_AMBIENT_MINUTE_DIGITS);
-            // Actually, the seconds are not rendered in the ambient mode, so we could pass just
-            // any value as ambientColor here.
+            // Actually, the seconds are not rendered in the ambient mode, so we could pass just any
+            // value as ambientColor here.
             adjustPaintColorToCurrentMode(mSecondPaint, mInteractiveSecondDigitsColor,
                     DigitalWatchFaceUtil.COLOR_VALUE_DEFAULT_AND_AMBIENT_SECOND_DIGITS);
 
@@ -324,6 +328,10 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                 mColonPaint.setAntiAlias(antiAlias);
             }
             invalidate();
+
+            // Whether the timer should be running depends on whether we're in ambient mode (as well
+            // as whether we're visible), so we may need to start or stop the timer.
+            updateTimer();
         }
 
         private void adjustPaintColorToCurrentMode(Paint paint, int interactiveColor,
@@ -358,9 +366,10 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                 return;
             }
             mInteractiveUpdateRateMs = updateRateMs;
-            if (isVisible()) {
-                mUpdateTimeHandler.removeMessages(MSG_UPDATE_TIME);
-                mUpdateTimeHandler.sendEmptyMessage(MSG_UPDATE_TIME);
+
+            // Stop and restart the timer so the new update rate takes effect immediately.
+            if (shouldTimerBeRunning()) {
+                updateTimer();
             }
         }
 
@@ -404,7 +413,7 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
         }
 
         @Override
-        public void onDraw(Canvas canvas) {
+        public void onDraw(Canvas canvas, Rect bounds) {
             mTime.setToNow();
 
             // Show colons for the first half of each second so the colons blink on when the time
@@ -412,7 +421,7 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             mShouldDrawColons = (System.currentTimeMillis() % 1000) < 500;
 
             // Draw the background.
-            canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), mBackgroundPaint);
+            canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
 
             // Draw the hours.
             float x = mXOffset;
@@ -445,6 +454,28 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                 canvas.drawText(formatTwoDigitNumber(mTime.second), x, mYOffset,
                         mSecondPaint);
             }
+        }
+
+        /**
+         * Starts the {@link #mUpdateTimeHandler} timer if it should be running and isn't currently
+         * or stops it if it shouldn't be running but currently is.
+         */
+        private void updateTimer() {
+            if (Log.isLoggable(TAG, Log.DEBUG)) {
+                Log.d(TAG, "updateTimer");
+            }
+            mUpdateTimeHandler.removeMessages(MSG_UPDATE_TIME);
+            if (shouldTimerBeRunning()) {
+                mUpdateTimeHandler.sendEmptyMessage(MSG_UPDATE_TIME);
+            }
+        }
+
+        /**
+         * Returns whether the {@link #mUpdateTimeHandler} timer should be running. The timer should
+         * only run when we're visible and in interactive mode.
+         */
+        private boolean shouldTimerBeRunning() {
+            return isVisible() && !isInAmbientMode();
         }
 
         private void updateConfigDataItemAndUiOnStartup() {

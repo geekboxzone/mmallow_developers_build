@@ -219,12 +219,9 @@ public class TiltWatchFaceService extends Gles2WatchFaceService {
         @Override
         public void onGlSurfaceCreated(int width, int height) {
             if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(TAG, "onGlSurfaceCreated");
+                Log.d(TAG, "onGlSurfaceCreated: " + width + " x " + height);
             }
             super.onGlSurfaceCreated(width, height);
-
-            // Adjust the viewport based on geometry changes such as screen rotation.
-            GLES20.glViewport(0, 0, width, height);
 
             // Update the projection matrix based on the new aspect ratio.
             final float aspectRatio = (float) width / height;
@@ -472,8 +469,8 @@ public class TiltWatchFaceService extends Gles2WatchFaceService {
                 mMinorTickTriangles.draw(vpMatrix);
             }
 
-            // Draw every frame as long as we're visible.
-            if (isVisible()) {
+            // Draw every frame as long as we're visible and in interactive mode.
+            if (isVisible() && !isInAmbientMode()) {
                 invalidate();
             }
         }
