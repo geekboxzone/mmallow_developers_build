@@ -82,7 +82,7 @@ public class CardBoundsWatchFaceService extends CanvasWatchFaceService {
         }
 
         @Override
-        public void onDraw(Canvas canvas) {
+        public void onDraw(Canvas canvas, Rect bounds) {
             // Clear screen.
             canvas.drawColor(isInAmbientMode() ? Color.BLACK : Color.BLUE);
 
