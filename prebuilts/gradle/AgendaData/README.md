@@ -1,11 +1,22 @@
 Android AgendaData Sample
 ===================================
 
-Syncs calendar events to your wearable at the press of a button, using the Wearable
-DataApi to transmit data such as event time, description, and background image. The DataItems can be
-deleted individually via an action on the event notifications, or all at once via a button on the
-companion. When deleted using the notification action, a ConfirmationActivity is used to indicate
-success or failure.
+Sample demonstrating sync of calendar events to a wearable by the press of a button.
+
+Introduction
+------------
+
+Using the Wearable [DataApi][1] allows to transmit data such as event time,
+description, and background image.
+
+The sent [DataItems][2] can be deleted individually via an action on the event notifications,
+or all at once via a button on the companion.
+
+When deleted using the notification action, a ConfirmationActivity is used to indicate
+success or failure. The sample shows implementations for both the success as well failure case.
+
+[1]: https://developer.android.com/reference/com/google/android/gms/wearable/DataApi.html
+[2]: https://developer.android.com/reference/com/google/android/gms/wearable/DataItem.html
 
 Pre-requisites
 --------------
@@ -13,6 +24,11 @@ Pre-requisites
 - Android SDK v21
 - Android Build Tools v21.1.1
 - Android Support Repository
+
+Screenshots
+-------------
+
+<img src="screenshots/companion_agenda_data.png" height="400" alt="Screenshot"/> <img src="screenshots/dummy_calendar_event.png" height="400" alt="Screenshot"/> 
 
 Getting Started
 ---------------
