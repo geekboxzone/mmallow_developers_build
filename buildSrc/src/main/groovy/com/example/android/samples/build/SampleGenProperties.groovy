@@ -47,7 +47,9 @@ class SampleGenProperties {
      */
     def pathToSamplesCommon
 
-    // Relative path to build directory (platform/developers/build)
+    /**
+     * Relative path to build directory (platform/developers/build)
+     */
     def pathToBuild
 
     /**
@@ -278,21 +280,18 @@ class SampleGenProperties {
         calledFrom = calledFrom.getCanonicalPath()
         println('\n\n\nReady to create project...')
 
-        if (!this.pathToSamplesCommonSet) {
-            if (project.hasProperty('pathToSamplesCommon')) {
-                this.pathToSamplesCommon = project.pathToSamplesCommon
-            } else {
-                throw new GradleException (
-                        'create task requires project property pathToSamplesCommon')
-            }
+        if (project.hasProperty('pathToSamplesCommon')) {
+            this.pathToSamplesCommon = project.pathToSamplesCommon
+        } else {
+            throw new GradleException (
+                    'create task requires project property pathToSamplesCommon')
         }
 
-        if (!this.pathToBuildSet) {
-            if (project.hasProperty('pathToBuild')) {
-                this.pathToBuild = project.pathToBuild
-            } else {
-                throw new GradleException ('create task requires project property pathToBuild')
-            }
+
+        if (project.hasProperty('pathToBuild')) {
+            this.pathToBuild = project.pathToBuild
+        } else {
+            throw new GradleException ('create task requires project property pathToBuild')
         }
 
         if (!this.targetProjectPath) {
