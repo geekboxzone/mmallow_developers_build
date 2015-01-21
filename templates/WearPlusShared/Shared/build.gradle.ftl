@@ -15,7 +15,7 @@
 -->
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -24,6 +24,19 @@ buildscript {
 }
 
 apply plugin: 'android-library'
+
+repositories {
+    jcenter()
+}
+
+<#if sample.dependency_shared?has_content>
+dependencies {
+
+<#list sample.dependency_shared as dep>
+    compile "${dep}"
+</#list>
+
+}</#if>
 
 // The sample build uses multiple directories to
 // keep boilerplate and common code separate from
