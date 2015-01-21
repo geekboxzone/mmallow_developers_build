@@ -3,12 +3,44 @@ Android EmbeddedApp Sample
 
 This simple app demonstrates how to embed a wearable app into a phone app.
 
+Introduction
+------------
+
+Wearable apps can be installed directly onto Android Wear devices during development, using either a direct ADB
+connection or ADB-over-Bluetooth. However, when releasing your app to end users, you must package your
+wearable APK inside of a traditional APK for distribution via a paired phone.
+
+When end users install this APK onto their phone, the wearable APK will be automatically detected, extracted, and pushed
+to their any paired wearable devices.
+
+This sample demonstrates how to properly package a wearable app for release in this manner. The wearable app is inside
+the `Wearable` directory, and the phone app (which will be used as a container for distribution) is the `Application`
+directory. There is nothing special about these apps, other than the `wearApp` dependency in the (host) phone app's
+`build.gradle` file:
+
+```groovy
+dependencies {
+    compile 'com.google.android.gms:play-services-wearable:6.5.+'
+    wearApp project(':Wearable')
+}
+```
+
+This dependency will automatically package the wearable APK during a **release build** (e.g. using the "Build > Generate
+Signed APK..." command in Android Studio). Note that this packaging is **not** performed for debug builds for
+performance reasons. During development, your wearable and phone apps must still be pushed individually to their
+respective devices using an ADB connection.
+
 Pre-requisites
 --------------
 
 - Android SDK v21
 - Android Build Tools v21.1.1
 - Android Support Repository
+
+Screenshots
+-------------
+
+<img src="screenshots/embedded_wearable_app.png" height="400" alt="Screenshot"/> <img src="screenshots/phone_app.png" height="400" alt="Screenshot"/> 
 
 Getting Started
 ---------------
