@@ -9,4 +9,8 @@ categories:   [Wearable]
 languages:    [Java]
 solutions:    [Mobile]
 github:       android-EmbeddedApp
+level:        BEGINNER
+icon:         src/main/res/drawable-xxhdpi/ic_launcher.png
+apiRefs:
+    - android:android.app.Activity
 license: apache2
