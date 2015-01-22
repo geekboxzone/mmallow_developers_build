@@ -15,7 +15,7 @@
 -->
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -32,6 +32,10 @@ repositories {
 </#list>
 }
 </#if>
+
+repositories {
+    jcenter()
+}
 
 dependencies {
 
