@@ -14,4 +14,7 @@
         See the License for the specific language governing permissions and
         limitations under the License.
 -->
-include ':${meta.module}', ':Wearable'
+<#if sample.wearable.has_handheld_app?has_content>
+include ':${meta.module}'
+</#if>
+include ':Wearable'
