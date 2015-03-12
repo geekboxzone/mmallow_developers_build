@@ -27,18 +27,14 @@ apply plugin: 'com.android.application'
 
 repositories {
     jcenter()
-}
-
 <#if sample.repository?has_content>
-repositories {
 <#list sample.repository as rep>
     ${rep}
 </#list>
-}
 </#if>
+}
 
 dependencies {
-
 <#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
   <#if sample.minSdk?matches(r'^\d+$') && sample.minSdk?number < 7>
     compile "com.android.support:support-v4:21.0.2"
@@ -52,13 +48,17 @@ dependencies {
     compile "com.android.support:cardview-v7:21.0.2"
   </#if>
 </#if>
-
 <#list sample.dependency as dep>
     compile "${dep}"
 </#list>
 <#list sample.dependency_external as dep>
     compile files(${dep})
 </#list>
+<#if sample.wearable.has_handheld_app?has_content && sample.wearable.has_handheld_app?lower_case == "true">
+    compile ${play_services_wearable_dependency}
+    compile ${android_support_v13_dependency}
+    wearApp project(':Wearable')
+</#if>
 }
 
 // The sample build uses multiple directories to
