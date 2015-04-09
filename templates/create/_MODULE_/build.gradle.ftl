@@ -37,11 +37,6 @@ android {
           to always use the most current SDK as their target. -->
     compileSdkVersion ${compile_sdk}
     buildToolsVersion ${build_tools_version}
-
-    defaultConfig {
-        testPackageName "${sample.package}.test"
-        testInstrumentationRunner "android.test.InstrumentationTestRunner"
-    }
 }
 
 task preflight (dependsOn: parent.preflight) {
