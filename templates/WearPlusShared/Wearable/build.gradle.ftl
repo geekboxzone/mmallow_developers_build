@@ -72,6 +72,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
     sourceSets {
         main {
             dirs.each { dir ->
