@@ -80,6 +80,11 @@ android {
         targetSdkVersion ${compile_sdk}
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
     sourceSets {
         main {
             dirs.each { dir ->
