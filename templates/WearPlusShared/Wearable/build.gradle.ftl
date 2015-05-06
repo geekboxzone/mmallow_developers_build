@@ -42,6 +42,10 @@ dependencies {
     compile "${dep}"
 </#list>
 
+<#list sample.provided_dependency_wearable as dep>
+    provided "${dep}"
+</#list>
+
     compile ${play_services_wearable_dependency}
     compile ${android_support_v13_dependency}
     compile ${wearable_support_dependency}
