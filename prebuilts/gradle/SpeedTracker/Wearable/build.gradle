@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 
@@ -20,9 +20,10 @@ dependencies {
 
     compile "com.google.android.gms:play-services-location:6.5.+"
 
-    compile 'com.google.android.gms:play-services-wearable:7.3.0+'
+
+    compile 'com.google.android.gms:play-services-wearable:7.3.0'
     compile 'com.android.support:support-v13:22.1.0'
-    compile 'com.google.android.support:wearable:1.1.+'
+    compile 'com.google.android.support:wearable:1.2.0'
     compile project(':Shared')
 }
 
@@ -50,6 +51,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt')
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
     sourceSets {
         main {
             dirs.each { dir ->

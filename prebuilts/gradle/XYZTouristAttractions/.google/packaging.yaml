@@ -30,4 +30,5 @@ apiRefs:
     - android:android.support.wearable.view.CardScrollView
     - android:android.support.wearable.view.GridPagerAdapter
     - android:android.support.wearable.view.WatchViewStub
+    - android:android.support.wearable.view.ActionPage
 license: apache2
