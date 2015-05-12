@@ -38,14 +38,14 @@ repositories {
 }
 
 dependencies {
-
 <#list sample.dependency as dep>
-    compile "${dep}"
+    <#-- Output dependency after checking if it is a play services depdency and
+    needs the latest version number attached. -->
+    <@update_play_services_dependency dep="${dep}" />
 </#list>
 <#list sample.dependency_external as dep>
     compile files(${dep})
 </#list>
-
     compile ${play_services_wearable_dependency}
     compile ${android_support_v13_dependency}
     compile project(':Shared')
