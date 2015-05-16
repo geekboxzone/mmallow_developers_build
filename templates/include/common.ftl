@@ -62,10 +62,26 @@
 <#else>
     <#assign min_sdk = "22"/>
 </#if>
+
+<#-- Global macros -->
+
+<#-- Check if dependency is a play services dependency and if it doesn't
+     have a version number attached use the global value
+     play_services_version -->
+<#macro update_play_services_dependency dep>
+    <#if "${dep}"?starts_with("com.google.android.gms:play-services")
+            && "${dep}"?index_of(":") == "${dep}"?last_index_of(":")>
+    compile '${dep}:${play_services_version}'
+    <#else>
+    compile '${dep}'
+    </#if>
+</#macro>
+
 <#-- Set the global build tools version -->
 <#assign build_tools_version='"22.0.1"'/>
 
-<#assign play_services_wearable_dependency="'com.google.android.gms:play-services-wearable:7.3.0'"/>
+<#assign play_services_version="7.3.0"/>
+<#assign play_services_wearable_dependency="'com.google.android.gms:play-services-wearable:${play_services_version}'"/>
 
 <#assign android_support_v13_dependency="'com.android.support:support-v13:22.1.0'"/>
 
