@@ -31,11 +31,11 @@ repositories {
 
 <#if sample.dependency_shared?has_content>
 dependencies {
-
 <#list sample.dependency_shared as dep>
-    compile "${dep}"
+    <#-- Output dependency after checking if it is a play services depdency and
+    needs the latest version number attached. -->
+    <@update_play_services_dependency dep="${dep}" />
 </#list>
-
 }</#if>
 
 // The sample build uses multiple directories to

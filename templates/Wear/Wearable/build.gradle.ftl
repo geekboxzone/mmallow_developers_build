@@ -35,7 +35,9 @@ repositories {
 dependencies {
 
 <#list sample.dependency_wearable as dep>
-    compile "${dep}"
+    <#-- Output dependency after checking if it is a play services depdency and
+    needs the latest version number attached. -->
+    <@update_play_services_dependency dep="${dep}" />
 </#list>
 
 <#list sample.provided_dependency_wearable as dep>
