@@ -1,3 +1,4 @@
+
 buildscript {
     repositories {
         jcenter()
@@ -16,8 +17,6 @@ repositories {
 }
 
 dependencies {
-
-
     compile 'com.google.android.gms:play-services-wearable:7.3.0'
     compile 'com.android.support:support-v13:22.1.0'
     compile project(':Shared')
