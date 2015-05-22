@@ -1,3 +1,4 @@
+
 Android BluetoothAdvertisements Sample
 ===================================
 
