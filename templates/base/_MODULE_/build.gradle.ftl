@@ -79,7 +79,11 @@ android {
 
     defaultConfig {
         minSdkVersion ${min_sdk}
-        targetSdkVersion ${compile_sdk}
+      <#if sample.targetSdkVersion?? && sample.targetSdkVersion?has_content>
+        targetSdkVersion ${sample.targetSdkVersion}
+      <#else>
+        targetSdkVersion ${sample.compileSdkVersion}
+      </#if>
     }
 
     compileOptions {
