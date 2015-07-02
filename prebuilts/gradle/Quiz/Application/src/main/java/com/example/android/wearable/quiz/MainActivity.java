@@ -445,16 +445,19 @@ public class MainActivity extends Activity implements DataApi.DataListener,
                     .setResultCallback(new ResultCallback<DataItemBuffer>() {
                         @Override
                         public void onResult(DataItemBuffer result) {
-                            if (result.getStatus().isSuccess()) {
-                                List<DataItem> dataItemList = FreezableUtils.freezeIterable(result);
-                                result.close();
-                                resetDataItems(dataItemList);
-                            } else {
-                                if (Log.isLoggable(TAG, Log.DEBUG)) {
-                                    Log.d(TAG, "Reset quiz: failed to get Data Items to reset");
+                            try {
+                                if (result.getStatus().isSuccess()) {
+                                    List<DataItem> dataItemList = FreezableUtils
+                                            .freezeIterable(result);
+                                    resetDataItems(dataItemList);
+                                } else {
+                                    if (Log.isLoggable(TAG, Log.DEBUG)) {
+                                        Log.d(TAG, "Reset quiz: failed to get Data Items to reset");
+                                    }
                                 }
+                            } finally {
+                                result.release();
                             }
-                            result.close();
                         }
                     });
         } else {
@@ -521,19 +524,23 @@ public class MainActivity extends Activity implements DataApi.DataListener,
                     .setResultCallback(new ResultCallback<DataItemBuffer>() {
                         @Override
                         public void onResult(DataItemBuffer result) {
-                            if (result.getStatus().isSuccess()) {
-                                List<Uri> dataItemUriList = new ArrayList<Uri>();
-                                for (final DataItem dataItem : result) {
-                                    dataItemUriList.add(dataItem.getUri());
+                            try {
+                                if (result.getStatus().isSuccess()) {
+                                    List<Uri> dataItemUriList = new ArrayList<Uri>();
+                                    for (final DataItem dataItem : result) {
+                                        dataItemUriList.add(dataItem.getUri());
+                                    }
+                                    deleteDataItems(dataItemUriList);
+                                } else {
+                                    if (Log.isLoggable(TAG, Log.DEBUG)) {
+                                        Log.d(TAG, "Clear quiz: failed to get Data Items for "
+                                                + "deletion");
+
+                                    }
                                 }
-                                result.close();
-                                deleteDataItems(dataItemUriList);
-                            } else {
-                                if (Log.isLoggable(TAG, Log.DEBUG)) {
-                                    Log.d(TAG, "Clear quiz: failed to get Data Items for deletion");
-                                }
+                            } finally {
+                                result.release();
                             }
-                            result.close();
                         }
                     });
         } else {
