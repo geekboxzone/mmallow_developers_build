@@ -33,7 +33,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.data.FreezableUtils;
 import com.google.android.gms.wearable.DataApi;
 import com.google.android.gms.wearable.DataItem;
 import com.google.android.gms.wearable.DataItemBuffer;
@@ -98,11 +97,7 @@ public class MainActivity extends Activity implements NodeApi.NodeListener, Conn
                         public void onResult(DataItemBuffer result) {
                             try {
                                 if (result.getStatus().isSuccess()) {
-                                    // Store the DataItem URIs in a List and release the buffer.
-                                    // Then use these URIs to delete the DataItems.
-                                    List<DataItem> dataItemList = FreezableUtils
-                                            .freezeIterable(result);
-                                    deleteDataItems(dataItemList);
+                                    deleteDataItems(result);
                                 } else {
                                     if (Log.isLoggable(TAG, Log.DEBUG)) {
                                         Log.d(TAG,"onDeleteEventsClicked(): failed to get Data "
@@ -121,7 +116,7 @@ public class MainActivity extends Activity implements NodeApi.NodeListener, Conn
         }
     }
 
-    private void deleteDataItems(final List<DataItem> dataItemList) {
+    private void deleteDataItems(final DataItemBuffer dataItemList) {
         if (mGoogleApiClient.isConnected()) {
             for (final DataItem dataItem : dataItemList) {
                 final Uri dataItemUri = dataItem.getUri();

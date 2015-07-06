@@ -325,8 +325,8 @@ public class MainActivity extends Activity implements DataApi.DataListener,
 
     @Override
     public void onDataChanged(DataEventBuffer dataEvents) {
+        // Need to freeze the dataEvents so they will exist later on the UI thread
         final List<DataEvent> events = FreezableUtils.freezeIterable(dataEvents);
-        dataEvents.close();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -447,9 +447,7 @@ public class MainActivity extends Activity implements DataApi.DataListener,
                         public void onResult(DataItemBuffer result) {
                             try {
                                 if (result.getStatus().isSuccess()) {
-                                    List<DataItem> dataItemList = FreezableUtils
-                                            .freezeIterable(result);
-                                    resetDataItems(dataItemList);
+                                    resetDataItems(result);
                                 } else {
                                     if (Log.isLoggable(TAG, Log.DEBUG)) {
                                         Log.d(TAG, "Reset quiz: failed to get Data Items to reset");
@@ -470,7 +468,7 @@ public class MainActivity extends Activity implements DataApi.DataListener,
         mNumSkipped = 0;
     }
 
-    private void resetDataItems(List<DataItem> dataItemList) {
+    private void resetDataItems(DataItemBuffer dataItemList) {
         if (mGoogleApiClient.isConnected()) {
             for (final DataItem dataItem : dataItemList) {
                 final Uri dataItemUri = dataItem.getUri();
