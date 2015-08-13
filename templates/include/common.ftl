@@ -39,7 +39,7 @@
 <#elseif (sample.compileSdkVersion)?has_content>
     <#assign compile_sdk = sample.compileSdkVersion/>
 <#else>
-    <#assign compile_sdk = "22"/>
+    <#assign compile_sdk = "23"/>
 </#if>
 <#-- Set the MinSDK version. This is more complicated than it should be, because
       the version can be either a number or a string (e.g. KeyLimePie) so we need to test
@@ -60,7 +60,7 @@
 <#elseif (sample.minSdk)?has_content>
     <#assign min_sdk = sample.minSdk/>
 <#else>
-    <#assign min_sdk = "22"/>
+    <#assign min_sdk = "23"/>
 </#if>
 
 <#-- Global macros -->
