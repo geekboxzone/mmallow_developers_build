@@ -37,15 +37,15 @@ repositories {
 dependencies {
 <#if !sample.auto_add_support_lib?has_content || sample.auto_add_support_lib == "true">
   <#if sample.minSdk?matches(r'^\d+$') && sample.minSdk?number < 7>
-    compile "com.android.support:support-v4:23.0.0-rc1"
+    compile "com.android.support:support-v4:23.0.0"
   <#elseif sample.minSdk?matches(r'^\d+$') && sample.minSdk?number < 13>
-    compile "com.android.support:support-v4:23.0.0-rc1"
-    compile "com.android.support:gridlayout-v7:23.0.0-rc1"
-    compile "com.android.support:cardview-v7:23.0.0-rc1"
+    compile "com.android.support:support-v4:23.0.0"
+    compile "com.android.support:gridlayout-v7:23.0.0"
+    compile "com.android.support:cardview-v7:23.0.0"
   <#else>
-    compile "com.android.support:support-v4:23.0.0-rc1"
-    compile "com.android.support:support-v13:23.0.0-rc1"
-    compile "com.android.support:cardview-v7:23.0.0-rc1"
+    compile "com.android.support:support-v4:23.0.0"
+    compile "com.android.support:support-v13:23.0.0"
+    compile "com.android.support:cardview-v7:23.0.0"
   </#if>
 </#if>
 <#list sample.dependency as dep>
