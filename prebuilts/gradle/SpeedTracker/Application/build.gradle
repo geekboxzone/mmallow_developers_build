@@ -19,7 +19,7 @@ repositories {
 dependencies {
     compile 'com.google.android.gms:play-services-location:7.3.0'
     compile 'com.google.android.gms:play-services-wearable:7.3.0'
-    compile 'com.android.support:support-v13:22.1.0'
+    compile 'com.android.support:support-v13:23.0.0'
     compile project(':Shared')
     wearApp project(':Wearable')
 }
@@ -35,7 +35,7 @@ List<String> dirs = [
 android {
     compileSdkVersion 23
 
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.0"
 
     defaultConfig {
         minSdkVersion 18
