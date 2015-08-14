@@ -19,7 +19,7 @@ See the "RuntimePermissions" sample for a more complete description and referenc
 Pre-requisites
 --------------
 
-- Android SDK vandroid-MNC
+- Android SDK v23
 - Android Build Tools v22.0.1
 - Android Support Repository
 

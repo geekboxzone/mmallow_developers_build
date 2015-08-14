@@ -24,7 +24,7 @@ The [NotificationManager][1] has become more powerful.
 Pre-requisites
 --------------
 
-- Android SDK vandroid-MNC
+- Android SDK v23
 - Android Build Tools v22.0.1
 - Android Support Repository
 

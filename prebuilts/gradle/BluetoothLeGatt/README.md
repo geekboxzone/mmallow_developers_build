@@ -23,7 +23,7 @@ The Activities communicate with the Service, which in turn interacts with the [B
 Pre-requisites
 --------------
 
-- Android SDK v22
+- Android SDK v23
 - Android Build Tools v22.0.1
 - Android Support Repository
 

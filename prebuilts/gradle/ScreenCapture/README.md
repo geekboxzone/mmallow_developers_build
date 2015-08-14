@@ -26,7 +26,7 @@ Once you get a MediaProjection, use [createVirtualDisplay][4] and bind it to a S
 Pre-requisites
 --------------
 
-- Android SDK v22
+- Android SDK v23
 - Android Build Tools v22.0.1
 - Android Support Repository
 
